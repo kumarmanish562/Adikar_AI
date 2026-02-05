@@ -25,9 +25,9 @@ TEST_DATASET_FILE = PROCESSED_DIR / "test_questions.json"
 EVALUATION_RESULTS_FILE = PROCESSED_DIR / "evaluation_results.json"
 
 # Processing parameters
-CHUNK_SIZE = 500  # Characters per chunk
-CHUNK_OVERLAP = 100  # Overlap between chunks
-TOP_K_CHUNKS = 5  # Number of chunks to retrieve per query
+CHUNK_SIZE = 1000  # Increased from 500: Captures more context per chunk
+CHUNK_OVERLAP = 200  # Increased from 100: Better continuity between chunks
+TOP_K_CHUNKS = 15  # Increased from 5: Retrieves 3x more relevant chunks for higher recall
 
 # Model configuration
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"  # 384-dimensional embeddings
