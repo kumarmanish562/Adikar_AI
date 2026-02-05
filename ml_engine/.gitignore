@@ -1,0 +1,93 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual Environments
+venv/
+env/
+ENV/
+rag_env/
+.venv/
+virtualenv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+.jupyter/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Large Generated Files (Training Outputs)
+data/processed/chunks.json
+data/processed/embeddings.pkl
+data/processed/faiss_index.bin
+data/processed/*.pkl
+data/processed/*.bin
+data/processed/*.json
+
+# Keep directory structure but ignore large files
+!data/processed/.gitkeep
+
+# PDF Files (Optional - uncomment if PDFs are too large)
+# data/raw_pdfs/**/*.pdf
+
+# Logs
+*.log
+logs/
+*.out
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Environment Variables
+.env
+.env.local
+*.env
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Model checkpoints (if you add fine-tuning later)
+checkpoints/
+*.ckpt
+*.pth
+*.h5
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Node modules (if you add any JS tools)
+node_modules/
+package-lock.json
+yarn.lock
