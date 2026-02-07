@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1e3a8a;
+  /* Navy Blue */
+  --color-secondary: #f97316;
+  /* Orange */
+  --color-accent: #3b82f6;
+  /* Blue */
+  --color-background: #ffffff;
+  --color-card: #f8fafc;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-slate-900 bg-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 transition-all flex items-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply border border-slate-300 text-slate-700 px-6 py-3 rounded-md font-medium hover:bg-slate-50 transition-all flex items-center gap-2;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-slate-100 rounded-xl p-6 shadow-sm;
+  }
+}
