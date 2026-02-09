@@ -1,29 +1,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const steps = [
-    {
-        number: "1",
-        title: "ASK OR SCAN",
-        text: "Type your query, record your voice, or upload a photo of a document."
-    },
-    {
-        number: "2",
-        title: "AI ANALYZES",
-        text: "Our neural engine cross-references thousands of Indian legal statutes instantly."
-    },
-    {
-        number: "3",
-        title: "GET GUIDANCE",
-        text: "Receive simple, actionable advice with links to official sources."
-    }
-];
+import { useTranslation } from 'react-i18next';
 
 const HowItWorks = () => {
+    const { t } = useTranslation();
+
+    const steps = [
+        {
+            number: "1",
+            title: t('landing.step1Title'),
+            text: t('landing.step1Desc')
+        },
+        {
+            number: "2",
+            title: t('landing.step2Title'),
+            text: t('landing.step2Desc')
+        },
+        {
+            number: "3",
+            title: t('landing.step3Title'),
+            text: t('landing.step3Desc')
+        }
+    ];
+
     return (
         <section className="py-24 bg-slate-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 className="text-3xl font-bold text-slate-900 mb-2">How It Works</h2>
+                <h2 className="text-3xl font-bold text-slate-900 mb-2">{t('landing.howItWorksTitle')}</h2>
                 <div className="w-16 h-1 bg-secondary mx-auto mb-16"></div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">

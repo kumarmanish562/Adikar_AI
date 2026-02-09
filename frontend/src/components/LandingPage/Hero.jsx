@@ -1,8 +1,11 @@
 import React from 'react';
 import { MessageSquare, ScanLine, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Hero = () => {
+    const { t } = useTranslation();
+
     return (
         <section className="pt-32 pb-16 px-4">
             <div className="max-w-4xl mx-auto text-center">
@@ -11,7 +14,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-widest text-primary uppercase bg-slate-100 rounded-full border border-slate-200"
                 >
-                    Government-grade Legal AI
+                    {t('landing.badge')}
                 </motion.div>
 
                 <motion.h1
@@ -20,8 +23,8 @@ const Hero = () => {
                     transition={{ delay: 0.1 }}
                     className="text-5xl md:text-7xl font-extrabold text-primary mb-6 leading-tight"
                 >
-                    Know Your Rights. <br />
-                    <span className="text-secondary italic">Instantly.</span>
+                    {t('landing.title1')} <br />
+                    <span className="text-secondary italic">{t('landing.title2')}</span>
                 </motion.h1>
 
                 <motion.p
@@ -30,7 +33,7 @@ const Hero = () => {
                     transition={{ delay: 0.2 }}
                     className="text-lg text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed"
                 >
-                    Ask legal questions in simple language. Powered by the latest Indian laws including BNS and BNSS.
+                    {t('landing.subtitle')}
                 </motion.p>
 
                 <motion.div
@@ -41,11 +44,11 @@ const Hero = () => {
                 >
                     <button className="btn-primary w-full sm:w-auto justify-center">
                         <MessageSquare className="w-5 h-5" />
-                        Ask a Legal Question
+                        {t('landing.askButton')}
                     </button>
                     <button className="btn-secondary w-full sm:w-auto justify-center">
                         <ScanLine className="w-5 h-5" />
-                        Scan a Document
+                        {t('landing.scanButton')}
                     </button>
                 </motion.div>
             </div>

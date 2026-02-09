@@ -3,8 +3,11 @@ import Hero from '../components/LandingPage/Hero';
 import Features from '../components/LandingPage/Features';
 import HowItWorks from '../components/LandingPage/HowItWorks';
 import { CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const LandingPage = () => {
+    const { t } = useTranslation();
+
     return (
         <main>
             <Hero />
@@ -27,10 +30,10 @@ const LandingPage = () => {
                         ))}
                     </div>
                     <p className="text-sm font-bold text-slate-800 mb-4">
-                        Based on the Constitution of India, Bharatiya Nyaya Sanhita (BNS), BNSS, and Specialized Acts.
+                        {t('landing.legalBasis')}
                     </p>
                     <p className="text-[10px] text-slate-400 uppercase tracking-widest leading-loose max-w-3xl mx-auto">
-                        Disclaimer: Adikar AI provides information for educational purposes only. It is not a substitute for professional legal advice from a qualified advocate. Please consult with a registered legal practitioner for specific cases.
+                        {t('landing.disclaimer')}
                     </p>
                 </div>
             </section>
