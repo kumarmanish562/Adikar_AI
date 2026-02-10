@@ -2,42 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Lock, Phone, Scale, EyeOff, ShieldCheck } from 'lucide-react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Login = () => {
     const { t, i18n } = useTranslation();
-    const activeLanguage = i18n.language;
 
     return (
-        <div className="auth-shell min-h-screen bg-slate-50 relative overflow-hidden">
+        <div className="auth-shell min-h-screen bg-slate-50 relative overflow-hidden flex flex-col">
+            <Navbar />
+
             <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
             <div className="absolute top-24 -right-20 h-72 w-72 rounded-full bg-indigo-200/40 blur-3xl" />
             <div className="absolute -bottom-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-slate-200/40 blur-3xl" />
 
-            <div className="relative z-10 flex min-h-screen flex-col">
-                <div className="flex items-center justify-end gap-6 px-6 pt-6 text-xs font-semibold text-slate-500">
-                    <button
-                        type="button"
-                        onClick={() => i18n.changeLanguage('en')}
-                        className={`transition-colors ${activeLanguage === 'en' ? 'text-primary' : 'hover:text-slate-700'}`}
-                    >
-                        {t('auth.languageEnglish')}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => i18n.changeLanguage('hi')}
-                        className={`transition-colors ${activeLanguage === 'hi' ? 'text-primary' : 'hover:text-slate-700'}`}
-                    >
-                        {t('auth.languageHindi')}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => i18n.changeLanguage('cg')}
-                        className={`transition-colors ${activeLanguage === 'cg' ? 'text-primary' : 'hover:text-slate-700'}`}
-                    >
-                        {t('auth.languageChhattisgarhi')}
-                    </button>
-                </div>
-
+            <div className="relative z-10 flex flex-1 flex-col pt-20">
                 <div className="flex flex-1 items-center justify-center px-4 py-12">
                     <div className="w-full max-w-md rounded-3xl border border-slate-100 bg-white/90 p-8 shadow-xl shadow-slate-200/60 backdrop-blur">
                         <div className="flex flex-col items-center text-center">
@@ -126,8 +105,11 @@ const Login = () => {
                     </Link>
                 </div>
             </div>
+
+            <Footer />
         </div>
     );
 };
 
 export default Login;
+
