@@ -22,10 +22,10 @@ const LandingPage = () => {
             <section className="py-16 border-t border-slate-100">
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <div className="flex flex-wrap justify-center gap-4 mb-8">
-                        {['BNS 2023', 'BNSS 2023', 'Consumer Laws', 'Family Law'].map((law) => (
-                            <div key={law} className="flex items-center gap-2 px-4 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold text-slate-700">
+                        {['bns', 'bnss', 'consumer', 'family'].map((lawKey) => (
+                            <div key={lawKey} className="flex items-center gap-2 px-4 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold text-slate-700">
                                 <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
-                                {law}
+                                {t(`landing.laws.${lawKey}`)}
                             </div>
                         ))}
                     </div>

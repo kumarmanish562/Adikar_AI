@@ -1,27 +1,30 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle, Mail, Phone, MessageSquare, Search } from 'lucide-react';
-
-const faqs = [
-    {
-        q: "Is Adikar AI a replacement for a lawyer?",
-        a: "No. Adikar AI provides educational information and helps you understand legal statutes. It is not a substitute for professional legal advice from a registered advocate."
-    },
-    {
-        q: "Does Adikar AI support regional languages?",
-        a: "Currently, we support English and Hindi for both queries and document analysis. Support for more regional languages is coming soon."
-    },
-    {
-        q: "How accurate is the legal information provided?",
-        a: "Adikar AI uses a Retrieval-Augmented Generation (RAG) system that cross-references actual legal documents like the BNS, BNSS, and the Constitution. Every answer includes citations to the source document for verification."
-    },
-    {
-        q: "How do I scan a physical legal document?",
-        a: "You can use the 'Scan a Document' button on the homepage to upload a photo of your document. Our AI will extract the text and provide a simplified summary."
-    }
-];
+import { useTranslation } from 'react-i18next';
 
 const Help = () => {
+    const { t } = useTranslation();
+
+    const faqs = [
+        {
+            q: t('help.faq1Q'),
+            a: t('help.faq1A')
+        },
+        {
+            q: t('help.faq2Q'),
+            a: t('help.faq2A')
+        },
+        {
+            q: t('help.faq3Q'),
+            a: t('help.faq3A')
+        },
+        {
+            q: t('help.faq4Q'),
+            a: t('help.faq4A')
+        }
+    ];
+
     return (
         <div className="pt-24 pb-16 px-4">
             <div className="max-w-7xl mx-auto">
@@ -31,13 +34,13 @@ const Help = () => {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-4xl md:text-6xl font-extrabold text-primary mb-6"
                     >
-                        How can we <span className="text-secondary italic">Help?</span>
+                        {t('help.title')}
                     </motion.h1>
                     <div className="max-w-xl mx-auto relative mb-12">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
                         <input
                             type="text"
-                            placeholder="Search for help articles, FAQs..."
+                            placeholder={t('help.searchPlaceholder')}
                             className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                         />
                     </div>
@@ -46,27 +49,27 @@ const Help = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
                     <div className="glass-card text-center">
                         <Mail className="w-8 h-8 text-primary mx-auto mb-4" />
-                        <h3 className="font-bold text-slate-900 mb-2">Email Support</h3>
-                        <p className="text-slate-500 text-sm mb-4">Response within 24 hours</p>
+                        <h3 className="font-bold text-slate-900 mb-2">{t('help.emailTitle')}</h3>
+                        <p className="text-slate-500 text-sm mb-4">{t('help.emailDesc')}</p>
                         <a href="mailto:support@adikari.ai" className="text-primary font-bold hover:underline italic underline-offset-4">support@adikari.ai</a>
                     </div>
                     <div className="glass-card text-center">
                         <MessageSquare className="w-8 h-8 text-primary mx-auto mb-4" />
-                        <h3 className="font-bold text-slate-900 mb-2">Live Chat</h3>
-                        <p className="text-slate-500 text-sm mb-4">Available 10 AM - 6 PM IST</p>
-                        <button className="text-primary font-bold hover:underline italic underline-offset-4">Start Chatting</button>
+                        <h3 className="font-bold text-slate-900 mb-2">{t('help.chatTitle')}</h3>
+                        <p className="text-slate-500 text-sm mb-4">{t('help.chatDesc')}</p>
+                        <button className="text-primary font-bold hover:underline italic underline-offset-4">{t('help.chatButton')}</button>
                     </div>
                     <div className="glass-card text-center">
                         <Phone className="w-8 h-8 text-primary mx-auto mb-4" />
-                        <h3 className="font-bold text-slate-900 mb-2">Phone</h3>
-                        <p className="text-slate-500 text-sm mb-4">Emergency legal assistance</p>
+                        <h3 className="font-bold text-slate-900 mb-2">{t('help.phoneTitle')}</h3>
+                        <p className="text-slate-500 text-sm mb-4">{t('help.phoneDesc')}</p>
                         <a href="tel:1800ADIKARAI" className="text-primary font-bold hover:underline italic underline-offset-4">1-800-ADIKAR-AI</a>
                     </div>
                 </div>
 
                 <section className="max-w-3xl mx-auto">
                     <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center flex items-center justify-center gap-2">
-                        <HelpCircle className="text-primary w-8 h-8" /> Frequently Asked Questions
+                        <HelpCircle className="text-primary w-8 h-8" /> {t('help.faqTitle')}
                     </h2>
                     <div className="space-y-6">
                         {faqs.map((faq, index) => (
