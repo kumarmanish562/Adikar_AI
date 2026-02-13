@@ -167,6 +167,15 @@ const resources = {
                 scanButton: 'दस्तावेज़ स्कैन करें',
                 howItWorksTitle: 'यह कैसे काम करता है',
                 featuresTitle: 'हर नागरिक को सशक्त बनाना',
+                featuresSubtitle: 'भारत की विविध आबादी के लिए डिज़ाइन किया गया।',
+                feature1Title: 'कानूनी चैट सहायक',
+                feature1Desc: 'आपकी सभी कानूनी जरूरतों के लिए सरल प्रश्न-उत्तर इंटरफ़ेस।',
+                feature2Title: 'स्नैप और सरल करें',
+                feature2Desc: 'दस्तावेज़ की फोटो अपलोड करें और तुरंत सारांश प्राप्त करें।',
+                feature3Title: 'आवाज समर्थन',
+                feature3Desc: 'अपनी भाषा में बोलें। हैंड्स-फ्री उपयोग के लिए उत्तम।',
+                feature4Title: 'विश्वसनीय स्रोत',
+                feature4Desc: 'सीधे संविधान और बीएनएस से उद्धरण।',
                 steps: 'चरण'
             },
             auth: { ...baseTranslation.auth, login: 'लॉगिन', createAccount: 'खाता बनाएं' }
@@ -185,7 +194,16 @@ const resources = {
                 askButton: 'প্রশ্ন জিজ্ঞাসা করুন',
                 scanButton: 'ডকুমেন্ট স্ক্যান করুন',
                 howItWorksTitle: 'কিভাবে কাজ করে',
-                featuresTitle: 'সকলের জন্য ক্ষমতায়ন'
+                featuresTitle: 'সকলের জন্য ক্ষমতায়ন',
+                featuresSubtitle: 'ভারতের বৈচিত্র্যময় জনসংখ্যার জন্য তৈরি।',
+                feature1Title: 'আইনি চ্যাট সহকারী',
+                feature1Desc: 'সহজ প্রশ্নোত্তর ইন্টারফেস। কোনো জটিল শব্দ নেই।',
+                feature2Title: 'ছবি এবং সরলীকরণ',
+                feature2Desc: 'নথির ছবি আপলোড করুন এবং তাৎক্ষণিক সারাংশ পান।',
+                feature3Title: 'ভয়েস সাপোর্ট',
+                feature3Desc: 'নিজের ভাষায় কথা বলুন।',
+                feature4Title: 'বিশ্বস্ত সূত্র',
+                feature4Desc: 'সরাসরি সংবিধান থেকে উদ্ধৃতি।'
             },
             auth: { ...baseTranslation.auth, login: 'লগইন', createAccount: 'অ্যাকাউন্ট তৈরি করুন' }
         }
@@ -203,7 +221,16 @@ const resources = {
                 askButton: 'ప్రశ్న అడగండి',
                 scanButton: 'పత్రాన్ని స్కాన్ చేయండి',
                 howItWorksTitle: 'ఇది ఎలా పనిచేస్తుంది',
-                featuresTitle: 'ప్రతి పౌరుడిని శక్తివంతం చేయడం'
+                featuresTitle: 'ప్రతి పౌరుడిని శక్తివంతం చేయడం',
+                featuresSubtitle: 'అందరి కోసం రూపొందించబడింది.',
+                feature1Title: 'లీగల్ చాట్ అసిస్టెంట్',
+                feature1Desc: 'మీ అన్ని చట్టపరమైన అవసరాలకు సరళమైన Q&A.',
+                feature2Title: 'స్నాప్ & సింప్లిఫై',
+                feature2Desc: 'ఏదైనా చట్టపరమైన పత్రం యొక్క ఫోటోను అప్‌లోడ్ చేయండి.',
+                feature3Title: 'వాయిస్ సపోర్ట్',
+                feature3Desc: 'AIతో మాట్లాడండి.',
+                feature4Title: 'నమ్మదగిన మూలాలు',
+                feature4Desc: 'రాజ్యాంగం నుండి నేరుగా ఉల్లేఖనాలు.'
             },
             auth: { ...baseTranslation.auth, login: 'లాగిన్', createAccount: 'ఖాతా సృష్టించండి' }
         }
@@ -221,7 +248,16 @@ const resources = {
                 askButton: 'प्रश्न विचारा',
                 scanButton: 'दस्तऐवज स्कॅन करा',
                 howItWorksTitle: 'हे कसे कार्य करते',
-                featuresTitle: 'प्रत्येक नागरिकाला सक्षम करणे'
+                featuresTitle: 'प्रत्येक नागरिकाला सक्षम करणे',
+                featuresSubtitle: 'भारताच्या विविध लोकसंख्येसाठी डिझाइन केलेले.',
+                feature1Title: 'कायदेशीर चॅट असिस्टंट',
+                feature1Desc: 'तुमच्या सर्व कायदेशीर गरजांसाठी सोपा प्रश्न-उत्तर इंटरफेस.',
+                feature2Title: 'स्नॅप आणि सोपे करा',
+                feature2Desc: 'कोणत्याही कायदेशीर कागदपत्राचा फोटो अपलोड करा.',
+                feature3Title: 'आवाज समर्थन',
+                feature3Desc: 'एआयशी बोला.',
+                feature4Title: 'विश्वसनीय स्रोत',
+                feature4Desc: 'थेट संविधानातून.'
             },
             auth: { ...baseTranslation.auth, login: 'लॉगिन', createAccount: 'खाते तयार करा' }
         }
@@ -239,7 +275,16 @@ const resources = {
                 askButton: 'கேள்வி கேள்',
                 scanButton: 'ஆவணத்தை ஸ்கேன் செய்',
                 howItWorksTitle: 'எப்படி வேலை செய்கிறது',
-                featuresTitle: 'ஒவ்வொரு குடிமகனையும் மேம்படுத்துதல்'
+                featuresTitle: 'ஒவ்வொரு குடிமகனையும் மேம்படுத்துதல்',
+                featuresSubtitle: 'அனைவருக்கும் வடிவமைக்கப்பட்டது.',
+                feature1Title: 'சட்ட அரட்டை உதவியாளர்',
+                feature1Desc: 'உங்கள் அனைத்து சட்டத் தேவைகளுக்கும் எளிய கேள்வி-பதில்.',
+                feature2Title: 'படம் எடுத்து எளிமையாக்கு',
+                feature2Desc: 'எந்தவொரு சட்ட ஆவணத்தின் புகைப்படத்தையும் பதிவேற்றவும்.',
+                feature3Title: 'குரல் ஆதரவு',
+                feature3Desc: 'AI உடன் பேசுங்கள்.',
+                feature4Title: 'நம்பகமான ஆதாரங்கள்',
+                feature4Desc: 'அரசியலமைப்பிலிருந்து நேரடியாக.'
             },
             auth: { ...baseTranslation.auth, login: 'உள்நுழை', createAccount: 'கணக்கை உருவாக்கு' }
         }
@@ -257,7 +302,16 @@ const resources = {
                 askButton: 'પ્રશ્ન પૂછો',
                 scanButton: 'દસ્તાવેજ સ્કેન કરો',
                 howItWorksTitle: 'તે કેવી રીતે કામ કરે છે',
-                featuresTitle: 'દરેક નાગરિકને સશક્ત બનાવવું'
+                featuresTitle: 'દરેક નાગરિકને સશક્ત બનાવવું',
+                featuresSubtitle: 'ભારતની વિવિધ વસ્તી માટે રચાયેલ.',
+                feature1Title: 'કાનૂની ચેટ સહાયક',
+                feature1Desc: 'તમારી બધી કાનૂની જરૂરિયાતો માટે સરળ પ્રશ્ન-જવાબ.',
+                feature2Title: 'ફોટો અને સરળ',
+                feature2Desc: 'કોઈપણ કાનૂની દસ્તાવેજનો ફોટો અપલોડ કરો.',
+                feature3Title: 'અવાજ આધાર',
+                feature3Desc: 'AI સાથે વાત કરો.',
+                feature4Title: 'વિશ્વસનીય સ્ત્રોતો',
+                feature4Desc: 'સીધા બંધારણમાંથી.'
             },
             auth: { ...baseTranslation.auth, login: 'લોગિન', createAccount: 'ખાતું બનાવો' }
         }
@@ -275,7 +329,16 @@ const resources = {
                 askButton: 'سوال پوچھیں',
                 scanButton: 'دستاویز اسکین کریں',
                 howItWorksTitle: 'یہ کیسے کام کرتا ہے',
-                featuresTitle: 'ہر شہری کو بااختیار بنانا'
+                featuresTitle: 'ہر شہری کو بااختیار بنانا',
+                featuresSubtitle: 'بھارت کی متنوع آبادی کے لیے ڈیزائن کیا گیا۔',
+                feature1Title: 'قانونی چیٹ اسسٹنٹ',
+                feature1Desc: 'آپ کی تمام قانونی ضروریات کے لیے آسان سوال و جواب۔',
+                feature2Title: 'تصویر لیں اور آسان بنائیں',
+                feature2Desc: 'کسی بھی قانونی دستاویز کی تصویر اپ لوڈ کریں۔',
+                feature3Title: 'آواز کی حمایت',
+                feature3Desc: 'AI سے بات کریں۔',
+                feature4Title: 'قابل اعتماد ذرائع',
+                feature4Desc: 'براہ راست آئین سے۔'
             },
             auth: { ...baseTranslation.auth, login: 'لاگ ان کریں', createAccount: 'اکاؤنٹ بنائیں' }
         }
@@ -293,7 +356,16 @@ const resources = {
                 askButton: 'ಪ್ರಶ್ನೆ ಕೇಳಿ',
                 scanButton: 'ದಾಖಲೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ',
                 howItWorksTitle: 'ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ',
-                featuresTitle: 'ಪ್ರತಿಯೊಬ್ಬ ಪ್ರಜೆಯನ್ನು ಸಬಲೀಕರಣಗೊಳಿಸುವುದು'
+                featuresTitle: 'ಪ್ರತಿಯೊಬ್ಬ ಪ್ರಜೆಯನ್ನು ಸಬಲೀಕರಣಗೊಳಿಸುವುದು',
+                featuresSubtitle: 'ಎಲ್ಲರಿಗೂ ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ.',
+                feature1Title: 'ಕಾನೂನು ಚಾಟ್ ಸಹಾಯಕ',
+                feature1Desc: 'ಸರಳ ಪ್ರಶ್ನೋತ್ತರ ಅಂತರಸಂಪರ್ಕ.',
+                feature2Title: 'ಫೋಟೋ ಮತ್ತು ಸರಳೀಕರಣ',
+                feature2Desc: 'ಯಾವುದೇ ಕಾನೂನು ದಾಖಲೆಯ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.',
+                feature3Title: 'ದನಿ ಬೆಂಬಲ',
+                feature3Desc: 'AI ನೊಂದಿಗೆ ಮಾತನಾಡಿ.',
+                feature4Title: 'ವಿಶ್ವಾಸಾರ್ಹ ಮೂಲಗಳು',
+                feature4Desc: 'ನೇರವಾಗಿ ಸಂವಿಧಾನದಿಂದ.'
             },
             auth: { ...baseTranslation.auth, login: 'ಲಾಗಿನ್', createAccount: 'ಖಾತೆ ತೆರೆಯಿರಿ' }
         }
@@ -311,7 +383,16 @@ const resources = {
                 askButton: 'ചോദ്യം ചോദിക്കുക',
                 scanButton: 'രേഖ സ്കാൻ ചെയ്യുക',
                 howItWorksTitle: 'ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു',
-                featuresTitle: 'ഓരോ പൗരനെയും ശാക്തീകരിക്കുന്നു'
+                featuresTitle: 'ഓരോ പൗരനെയും ശാക്തീകരിക്കുന്നു',
+                featuresSubtitle: 'എല്ലാവർക്കുമായി രൂപകൽപ്പന ചെയ്തിരിക്കുന്നത്.',
+                feature1Title: 'നിയമ ചാറ്റ് അസിസ്റ്റന്റ്',
+                feature1Desc: 'ലളിതമായ ചോദ്യോത്തര ഇന്റർഫേസ്.',
+                feature2Title: 'ഫോട്ടോയും ലളിതവൽക്കരണവും',
+                feature2Desc: 'ഏതെങ്കിലും നിയമരേഖയുടെ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക.',
+                feature3Title: 'വോയ്സ് സപ്പോർട്ട്',
+                feature3Desc: 'AI-യോട് സംസാരിക്കുക.',
+                feature4Title: 'വിശ്വസനീയമായ ഉറവിടങ്ങൾ',
+                feature4Desc: 'ഭരണഘടനയിൽ നിന്ന് നേരിട്ട്.'
             },
             auth: { ...baseTranslation.auth, login: 'ലോഗിൻ', createAccount: 'അക്കൗണ്ട് സൃഷ്ടിക്കുക' }
         }
@@ -329,7 +410,16 @@ const resources = {
                 askButton: 'ପ୍ରଶ୍ନ ପଚାରନ୍ତୁ',
                 scanButton: 'ଦସ୍ତାବିଜ୍ ସ୍କାନ୍ କରନ୍ତୁ',
                 howItWorksTitle: 'ଏହା କିପରି କାର୍ଯ୍ୟ କରେ',
-                featuresTitle: 'ପ୍ରତ୍ୟେକ ନାଗରିକଙ୍କୁ ସଶକ୍ତ କରିବା'
+                featuresTitle: 'ପ୍ରତ୍ୟେକ ନାଗରିକଙ୍କୁ ସଶକ୍ତ କରିବା',
+                featuresSubtitle: 'ସମସ୍ତଙ୍କ ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଛି।',
+                feature1Title: 'ଆଇନଗତ ଚାଟ୍ ସହାୟକ',
+                feature1Desc: 'ସରଳ ପ୍ରଶ୍ନୋତ୍ତର ଇଣ୍ଟରଫେସ୍।',
+                feature2Title: 'ଫଟୋ ଏବଂ ସରଳୀକରଣ',
+                feature2Desc: 'ଯେକୌଣସି ଆଇନଗତ ଦସ୍ତାବିଜର ଫଟୋ ଅପଲୋଡ୍ କରନ୍ତୁ।',
+                feature3Title: 'ସ୍ୱର ସହାୟତା',
+                feature3Desc: 'AI ସହିତ କଥାବାର୍ତ୍ତା କରନ୍ତୁ।',
+                feature4Title: 'ବିଶ୍ୱସ୍ତ ଉତ୍ସ',
+                feature4Desc: 'ସିଧାସଳଖ ସମ୍ବିଧାନରୁ।'
             },
             auth: { ...baseTranslation.auth, login: 'ଲଗ୍ ଇନ୍', createAccount: 'ଆକାଉଣ୍ଟ୍ ଖୋଲନ୍ତୁ' }
         }
@@ -347,7 +437,16 @@ const resources = {
                 askButton: 'ਸਵਾਲ ਪੁੱਛੋ',
                 scanButton: 'ਦਸਤਾਵੇਜ਼ ਸਕੈਨ ਕਰੋ',
                 howItWorksTitle: 'ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ',
-                featuresTitle: 'ਹਰ ਨਾਗਰਿਕ ਨੂੰ ਸ਼ਕਤੀਸ਼ਾਲੀ ਬਣਾਉਣਾ'
+                featuresTitle: 'ਹਰ ਨਾਗਰਿਕ ਨੂੰ ਸ਼ਕਤੀਸ਼ਾਲੀ ਬਣਾਉਣਾ',
+                featuresSubtitle: 'ਭਾਰਤ ਦੀ ਵੱਖ-ਵੱਖ ਆਬਾਦੀ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ।',
+                feature1Title: 'ਕਾਨੂੰਨੀ ਚੈਟ ਸਹਾਇਕ',
+                feature1Desc: 'ਤੁਹਾਡੀਆਂ ਸਾਰੀਆਂ ਕਾਨੂੰਨੀ ਜ਼ਰੂਰਤਾਂ ਲਈ ਸਧਾਰਨ ਸਵਾਲ-ਜਵਾਬ।',
+                feature2Title: 'ਫੋਟੋ ਅਤੇ ਸਰਲ',
+                feature2Desc: 'ਕਿਸੇ ਵੀ ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼ ਦੀ ਫੋਟੋ ਅਪਲੋਡ ਕਰੋ।',
+                feature3Title: 'ਆਵਾਜ਼ ਸਹਾਇਤਾ',
+                feature3Desc: 'AI ਨਾਲ ਗੱਲ ਕਰੋ।',
+                feature4Title: 'ਭਰੋਸੇਯੋਗ ਸਰੋਤ',
+                feature4Desc: 'ਸਿੱਧੇ ਸੰਵਿਧਾਨ ਤੋਂ।'
             },
             auth: { ...baseTranslation.auth, login: 'ਲਾਗਇਨ', createAccount: 'ਖਾਤਾ ਬਣਾਓ' }
         }
@@ -365,7 +464,16 @@ const resources = {
                 askButton: 'প্ৰশ্ন সোধক',
                 scanButton: 'নথি স্কেন কৰক',
                 howItWorksTitle: 'এয়া কেনেকৈ কাম কৰে',
-                featuresTitle: 'প্ৰতিজন নাগৰিকক শক্তিশালী কৰা'
+                featuresTitle: 'প্ৰতিজন নাগৰিকক শক্তিশালী কৰা',
+                featuresSubtitle: 'সকলোৰে বাবে ডিজাইন কৰা হৈছে।',
+                feature1Title: 'আইনী চাট সহায়ক',
+                feature1Desc: 'সহজ প্ৰশ্নোত্তৰ।',
+                feature2Title: 'ফটো আৰু সৰলীক',
+                feature2Desc: 'যিকোনো আইনী নথিৰ ফটো আপলোড কৰক।',
+                feature3Title: 'কণ্ঠ সহায়',
+                feature3Desc: 'AI ৰ সৈতে কথা পাতক।',
+                feature4Title: 'বিশ্বস্ত উৎস',
+                feature4Desc: 'পোনপটীয়াভাৱে সংবিধানৰ পৰা।'
             },
             auth: { ...baseTranslation.auth, login: 'লগইন', createAccount: 'একাউণ্ট খোলক' }
         }
@@ -383,7 +491,16 @@ const resources = {
                 askButton: 'प्रश्न पूछू',
                 scanButton: 'दस्तावेज स्कैन करू',
                 howItWorksTitle: 'ई कोना काज करैत अछि',
-                featuresTitle: 'सब नागरिक के सशक्त बनेबाक लेल'
+                featuresTitle: 'सब नागरिक के सशक्त बनेबाक लेल',
+                featuresSubtitle: 'सब लेल डिजाइन कएल गेल अछि।',
+                feature1Title: 'कानूनी चैट सहायक',
+                feature1Desc: 'सरल प्रश्न-उत्तर।',
+                feature2Title: 'फोटो लेल आ सरल',
+                feature2Desc: 'कोनो कानूनी कागजक फोटो अपलोड करू।',
+                feature3Title: 'आवाज समर्थन',
+                feature3Desc: 'AI सँ गप करू।',
+                feature4Title: 'विश्वसनीय स्रोत',
+                feature4Desc: 'सीधे संविधान सँ।'
             },
             auth: { ...baseTranslation.auth, login: 'लॉगिन', createAccount: 'खाता बनाउ' }
         }
@@ -401,7 +518,16 @@ const resources = {
                 askButton: 'ᱠᱩᱠᱞᱤ ᱠᱩᱞᱤ ᱢᱮ',
                 scanButton: 'ᱫᱚᱞᱤᱞ ᱥᱠᱮᱱ ᱢᱮ',
                 howItWorksTitle: 'ᱱᱚᱣᱟ ᱪᱮᱫ ᱞᱮᱠᱟ ᱠᱟᱹᱢᱤᱭᱟ',
-                featuresTitle: 'ᱡᱚᱛᱚ ᱱᱟᱜᱟᱹᱨᱤᱭᱟᱹ ᱠᱚ ᱫᱟᱲᱮ ᱮᱢ ᱞᱟᱹᱜᱤᱫ'
+                featuresTitle: 'ᱡᱚᱛᱚ ᱱᱟᱜᱟᱹᱨᱤᱭᱟᱹ ᱠᱚ ᱫᱟᱲᱮ ᱮᱢ ᱞᱟᱹᱜᱤᱫ',
+                featuresSubtitle: 'ᱥᱟᱱᱟᱢ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱵᱮᱱᱟᱣ ᱟᱠᱟᱱᱟ᱾',
+                feature1Title: 'ᱟᱹᱱᱟᱹᱨᱤ ᱪᱮᱴ ᱜᱚᱲᱚ',
+                feature1Desc: 'ᱟᱞᱜᱟ ᱠᱩᱠᱞᱤ-ᱞᱟᱹᱱᱟᱹᱭ᱾',
+                feature2Title: 'ᱪᱤᱛᱟᱹᱨ ᱟᱨ ᱟᱞᱜᱟ',
+                feature2Desc: 'ᱡᱟᱦᱟᱸ ᱟᱹᱱᱟᱹᱨᱤ ᱫᱚᱞᱤᱞ ᱨᱮᱱᱟᱜ ᱪᱤᱛᱟᱹᱨ ᱞᱟᱫᱮ ᱢᱮ᱾',
+                feature3Title: 'ᱟᱲᱟᱝ ᱜᱚᱲᱚ',
+                feature3Desc: 'AI ᱥᱟᱶ ᱨᱚᱲ ᱢᱮ᱾',
+                feature4Title: 'ᱯᱟᱹᱛᱭᱟᱹᱣ ᱟᱱ ᱯᱷᱮᱰᱟᱛ',
+                feature4Desc: 'ᱥᱚᱢᱵᱤᱫᱷᱟᱱ ᱠᱷᱚᱱ ᱥᱚᱡᱷᱮ᱾'
             },
             auth: { ...baseTranslation.auth, login: 'ᱞᱚᱜᱤᱱ', createAccount: 'ᱮᱠᱟᱣᱩᱱᱴ ᱵᱮᱱᱟᱣ ᱢᱮ' }
         }
@@ -419,7 +545,16 @@ const resources = {
                 askButton: 'سوال پُچھِیو',
                 scanButton: 'کاغذات اسکین کریو',
                 howItWorksTitle: 'یہِ چھُ کتھِ کنِ کأم کران',
-                featuresTitle: 'ہر شہری سُنٛد بااختیار بناوُن'
+                featuresTitle: 'ہر شہری سُنٛد بااختیار بناوُن',
+                featuresSubtitle: 'تمام لوکن ہنز خاطر۔',
+                feature1Title: 'قانونی چیٹ اسسٹنٹ',
+                feature1Desc: 'آسان سوال و جواب۔',
+                feature2Title: 'تصویر تَلو تِ آسان بَنأو',
+                feature2Desc: 'کانہہ تہِ قانونی کاغذچ تصویر کریو اپ لوڈ۔',
+                feature3Title: 'آوازچ مدد',
+                feature3Desc: 'AI ستھ کریو کتھ۔',
+                feature4Title: 'قابل اعتماد ذرائع',
+                feature4Desc: 'آئین پیٹھ براہ راست۔'
             },
             auth: { ...baseTranslation.auth, login: 'لاگ ان', createAccount: 'اکاؤنٹ بناو' }
         }
@@ -437,7 +572,16 @@ const resources = {
                 askButton: 'प्रश्न सोध्नुहोस्',
                 scanButton: 'कागजात स्क्यान गर्नुहोस्',
                 howItWorksTitle: 'यसले कसरी काम गर्छ',
-                featuresTitle: 'हरेक नागरिकलाई सशक्त बनाउँदै'
+                featuresTitle: 'हरेक नागरिकलाई सशक्त बनाउँदै',
+                featuresSubtitle: 'सबैका लागि डिजाइन गरिएको।',
+                feature1Title: 'कानूनी च्याट सहायक',
+                feature1Desc: 'सरल प्रश्नोत्तर इन्टरफेस।',
+                feature2Title: 'तस्बिर र सरलीकरण',
+                feature2Desc: 'कुनै पनि कानूनी कागजातको फोटो अपलोड गर्नुहोस्।',
+                feature3Title: 'आवाज सहयोग',
+                feature3Desc: 'AI सँग कुरा गर्नुहोस्।',
+                feature4Title: 'विश्वसनीय स्रोतहरू',
+                feature4Desc: 'सिधै संविधानबाट।'
             },
             auth: { ...baseTranslation.auth, login: 'लगइन', createAccount: 'खाता खोल्नुहोस्' }
         }
@@ -455,7 +599,16 @@ const resources = {
                 askButton: 'سوال پڇو',
                 scanButton: 'دستاويز اسڪين ڪريو',
                 howItWorksTitle: 'هي ڪيئن ڪم ڪري ٿو',
-                featuresTitle: 'هر شهري کي بااختيار بڻائڻ'
+                featuresTitle: 'هر شهري کي بااختيار بڻائڻ',
+                featuresSubtitle: 'سڀني لاء ٺهيل.',
+                feature1Title: 'قانوني چيٽ اسسٽنٽ',
+                feature1Desc: 'آسان سوال ۽ جواب.',
+                feature2Title: 'تصوير ۽ سادو',
+                feature2Desc: 'ڪنهن به قانوني دستاويز جي تصوير اپ لوڊ ڪريو.',
+                feature3Title: 'آواز جي مدد',
+                feature3Desc: 'AI سان ڳالهايو.',
+                feature4Title: 'قابل اعتماد ذريعا',
+                feature4Desc: 'آئين مان سڌو.'
             },
             auth: { ...baseTranslation.auth, login: 'لاگ ان', createAccount: 'کاتو ٺاهيو' }
         }
@@ -473,7 +626,16 @@ const resources = {
                 askButton: 'प्रस्न विचार',
                 scanButton: 'दस्तावेज स्कॅन करा',
                 howItWorksTitle: 'हें कशें काम करता',
-                featuresTitle: 'दरेक नागरिकाक बळिश्ट करप'
+                featuresTitle: 'दरेक नागरिकाक बळिश्ट करप',
+                featuresSubtitle: 'सगळ्यां खातीर तयार केल्ले.',
+                feature1Title: 'कायदेशीर चॅट मदतनीस',
+                feature1Desc: 'सोपे प्रस्न-जाप इंटरफेस.',
+                feature2Title: 'फोटो आनी सोपें',
+                feature2Desc: 'खंयच्याय कायदेशीर दस्तावेजाचो फोटो अपलोड करात.',
+                feature3Title: 'आवाज मदत',
+                feature3Desc: 'AI कडेन उलय.',
+                feature4Title: 'विस्वासाचे स्त्रोत',
+                feature4Desc: 'सरळ संविधानांतल्यान.'
             },
             auth: { ...baseTranslation.auth, login: 'लॉगिन', createAccount: 'खातें तयार करात' }
         }
@@ -491,7 +653,16 @@ const resources = {
                 askButton: 'सवाल पुच्छो',
                 scanButton: 'कागज स्कैन करो',
                 howItWorksTitle: 'एह् किन्‌यां कम्म करदा ऐ',
-                featuresTitle: 'हर्‌यक नागरिक गी शक्‌त बनाना'
+                featuresTitle: 'हर्‌यक नागरिक गी शक्‌त बनाना',
+                featuresSubtitle: 'सबनें आस्तै बनाए दा।',
+                feature1Title: 'कानूनी चैट सहायक',
+                feature1Desc: 'सादा सवाल-जवाब।',
+                feature2Title: 'फोटो ते सरल',
+                feature2Desc: 'कुसै बी कानूनी कागज दी फोटो पाओ।',
+                feature3Title: 'आवाज मदद',
+                feature3Desc: 'AI कन्नै गल्ल करो।',
+                feature4Title: 'भरोसेमंद जरिया',
+                feature4Desc: 'सिद्धै संविधान थमां।'
             },
             auth: { ...baseTranslation.auth, login: 'लॉगिन', createAccount: 'खाता बनाओ' }
         }
@@ -509,7 +680,16 @@ const resources = {
                 askButton: 'ৱাহং হংবীয়ু',
                 scanButton: 'চে-চাং স্কেন তৌবীয়ু',
                 howItWorksTitle: 'অসি করম্না থবক তৌবগে',
-                featuresTitle: 'মীয়াম পুম্নমকপু শক্তি পীবা'
+                featuresTitle: 'মীয়াম পুম্নমকপু শক্তি পীবা',
+                featuresSubtitle: 'মিয়াম পুম্নমক্কীদমক শেম-শাবা।',
+                feature1Title: 'আইনি চ্যাট মতেং',
+                feature1Desc: 'চাম্বা ৱাহং-পাউখুম।',
+                feature2Title: 'ফোটো অমসুং লাইথোকহনবা',
+                feature2Desc: 'আইনি চে-চাং অমা হাপকৎপীয়ু।',
+                feature3Title: 'খোনজেল মতেং',
+                feature3Desc: 'AI গা ৱারী শাবীয়ু।',
+                feature4Title: 'থাজবা য়াবা মফম',
+                feature4Desc: 'সংবিধানদগী হকথেংননা।'
             },
             auth: { ...baseTranslation.auth, login: 'লোগিন', createAccount: 'একাউন্ট শেমগৎপীয়ু' }
         }
@@ -527,7 +707,16 @@ const resources = {
                 askButton: 'सोंथि सों',
                 scanButton: 'बिलाइ स्कान खालाम',
                 howItWorksTitle: 'बेयो माबोरै खामानि मावो',
-                featuresTitle: 'साफ्रोम सुबुंखौ गोहो गोनां खालामनाय'
+                featuresTitle: 'साफ्रोम सुबुंखौ गोहो गोनां खालामनाय',
+                featuresSubtitle: 'गासैरावनिबो थाखाय बानायनाय।',
+                feature1Title: 'आइनि साट मददगिरि',
+                feature1Desc: 'गोरलै सोंनाय फिननाय।',
+                feature2Title: 'फोटो आरो गोरलै',
+                feature2Desc: 'जेबो आइनि बिलाइनि फोटो अपलोड खालाम।',
+                feature3Title: 'राव मदद',
+                feature3Desc: 'AI जों रायलाय।',
+                feature4Title: 'फोथायथाव',
+                feature4Desc: 'थोंजों संबिधान निफ्राय।'
             },
             auth: { ...baseTranslation.auth, login: 'लगीन', createAccount: 'एकाउन्ट बानाय' }
         }
@@ -545,7 +734,16 @@ const resources = {
                 askButton: 'प्रश्नं पृच्छन्तु',
                 scanButton: 'प्रपत्रं वीक्षन्ताम्',
                 howItWorksTitle: 'एतत् कथं कार्यं करोति',
-                featuresTitle: 'प्रत्येकं नागरिकं सशक्तिकरणम्'
+                featuresTitle: 'प्रत्येकं नागरिकं सशक्तिकरणम्',
+                featuresSubtitle: 'सर्वेषां कृते निर्मितम्।',
+                feature1Title: 'विधि-सम्भाषण-सहायकः',
+                feature1Desc: 'सरल-प्रश्नोत्तरी-अन्तरफलकम्।',
+                feature2Title: 'चित्रं स्वीकुरुत',
+                feature2Desc: 'विधिपत्रस्य चित्रं प्रेषयन्तु।',
+                feature3Title: 'ध्वनि-साहाय्यम्',
+                feature3Desc: 'AI सह वदन्तु।',
+                feature4Title: 'विश्वसनीयाः स्रोतः',
+                feature4Desc: 'संविधानात् साक्षात्।'
             },
             auth: { ...baseTranslation.auth, login: 'प्रवेशः', createAccount: 'लेखां रचयन्तु' }
         }
