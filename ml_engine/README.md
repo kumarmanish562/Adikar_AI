@@ -158,4 +158,4 @@ ml_engine/
 - **No traditional training**: This RAG system uses pre-trained sentence-transformers
 - **GPU not required**: CPU processing works fine (just slower)
 - **Incremental updates**: You can re-run Step 1 if you add more PDFs
-- **Fast inference**: FAISS enables sub-second searches on thousands of chunks
+- **Fast inference**: FAISS enables sub-second searches on thousands of ch
