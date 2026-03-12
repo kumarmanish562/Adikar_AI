@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, Scale } from 'lucide-react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const VerifyOtp = () => {
     const { t, i18n } = useTranslation();
-    const activeLanguage = i18n.language;
     const [timer, setTimer] = useState(30);
     const [code, setCode] = useState(Array(6).fill(''));
+
+    const changeLanguage = (lang) => {
+        i18n.changeLanguage(lang);
+    };
 
     useEffect(() => {
         if (timer <= 0) {
@@ -30,36 +35,14 @@ const VerifyOtp = () => {
     const formattedTimer = `00:${String(timer).padStart(2, '0')}`;
 
     return (
-        <div className="auth-shell min-h-screen bg-slate-50 relative overflow-hidden">
+        <div className="auth-shell min-h-screen bg-slate-50 relative overflow-hidden flex flex-col">
             <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
             <div className="absolute top-24 -right-20 h-72 w-72 rounded-full bg-indigo-200/40 blur-3xl" />
             <div className="absolute -bottom-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-slate-200/40 blur-3xl" />
 
-            <div className="relative z-10 flex min-h-screen flex-col">
-                <div className="flex items-center justify-end gap-6 px-6 pt-6 text-xs font-semibold text-slate-500">
-                    <button
-                        type="button"
-                        onClick={() => i18n.changeLanguage('en')}
-                        className={`transition-colors ${activeLanguage === 'en' ? 'text-primary' : 'hover:text-slate-700'}`}
-                    >
-                        {t('auth.languageEnglish')}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => i18n.changeLanguage('hi')}
-                        className={`transition-colors ${activeLanguage === 'hi' ? 'text-primary' : 'hover:text-slate-700'}`}
-                    >
-                        {t('auth.languageHindi')}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => i18n.changeLanguage('cg')}
-                        className={`transition-colors ${activeLanguage === 'cg' ? 'text-primary' : 'hover:text-slate-700'}`}
-                    >
-                        {t('auth.languageChhattisgarhi')}
-                    </button>
-                </div>
+            <Navbar />
 
+            <div className="relative z-10 flex flex-1 flex-col pt-16">
                 <div className="flex flex-1 items-center justify-center px-4 py-12">
                     <div className="w-full max-w-md rounded-3xl border border-slate-100 bg-white/90 p-8 shadow-xl shadow-slate-200/60 backdrop-blur">
                         <div className="flex flex-col items-center text-center">
@@ -108,13 +91,14 @@ const VerifyOtp = () => {
                             <ShieldCheck className="h-3.5 w-3.5" />
                             <span>{t('auth.secureNote')}</span>
                         </div>
+                        <p className="mt-1 text-center text-[10px] uppercase tracking-[0.2em] text-slate-300">
+                            {t('auth.sslNote')}
+                        </p>
                     </div>
                 </div>
-
-                <div className="pb-8 text-center text-[10px] uppercase tracking-[0.2em] text-slate-300">
-                    <span>{t('auth.sslNote')}</span>
-                </div>
             </div>
+
+            <Footer />
         </div>
     );
 };

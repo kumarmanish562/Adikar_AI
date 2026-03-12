@@ -8,11 +8,12 @@ import Help from './pages/Help';
 import Login from './pages/Login';
 import CreateAccount from './pages/CreateAccount';
 import VerifyOtp from './pages/VerifyOtp';
+import ForgotPassword from './pages/ForgotPassword';
 import Footer from './components/Footer';
 
 const AppContent = () => {
   const location = useLocation();
-  const hideChrome = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/verify';
+  const hideChrome = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/verify' || location.pathname === '/forgot-password';
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden flex flex-col">
@@ -27,6 +28,7 @@ const AppContent = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<CreateAccount />} />
           <Route path="/verify" element={<VerifyOtp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </div>
 

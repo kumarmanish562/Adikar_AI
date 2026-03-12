@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Lock, Mail, Scale, EyeOff, ShieldCheck } from 'lucide-react';
+import { Phone, Scale, ShieldCheck, ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const Login = () => {
+const ForgotPassword = () => {
     const { t, i18n } = useTranslation();
+    const [mobile, setMobile] = useState('');
+    const [error, setError] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (!mobile.trim()) {
+            setError(t('validation.required'));
+            return;
+        }
+        // Handle forgot password logic here
+        console.log('Reset password for:', mobile);
+    };
 
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
@@ -27,45 +39,40 @@ const Login = () => {
                             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10">
                                 <Scale className="h-6 w-6 text-primary" />
                             </div>
-                            <h1 className="text-lg font-extrabold tracking-wide text-primary">{t('auth.appName')}</h1>
-                            <p className="mt-1 text-xs text-slate-400">{t('auth.tagline')}</p>
+                            <h1 className="text-lg font-extrabold tracking-wide text-primary">{t('auth.forgotPasswordTitle')}</h1>
+                            <p className="mt-1 text-xs text-slate-400">{t('auth.forgotPasswordSubtitle')}</p>
                         </div>
 
-                        <form className="mt-8 space-y-5">
+                        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                             <div>
-                                <label className="text-xs font-semibold text-slate-600">{t('auth.emailAddress')}</label>
+                                <label className="text-xs font-semibold text-slate-600">{t('auth.mobileNumber')}</label>
                                 <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm">
-                                    <Mail className="h-4 w-4 text-slate-400" />
+                                    <Phone className="h-4 w-4 text-slate-400" />
                                     <input
-                                        type="email"
-                                        placeholder={t('auth.emailPlaceholder')}
+                                        type="tel"
+                                        placeholder={t('auth.mobilePlaceholder')}
+                                        value={mobile}
+                                        onChange={(e) => setMobile(e.target.value)}
                                         className="w-full text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
                                     />
                                 </div>
-                            </div>
-
-                            <div>
-                                <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
-                                    <label>{t('auth.password')}</label>
-                                    <Link to="/forgot-password" className="text-primary hover:text-primary/80 transition-colors">{t('auth.forgotPassword')}</Link>
-                                </div>
-                                <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm">
-                                    <Lock className="h-4 w-4 text-slate-400" />
-                                    <input
-                                        type="password"
-                                        placeholder="********"
-                                        className="w-full text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
-                                    />
-                                    <EyeOff className="h-4 w-4 text-slate-300" />
-                                </div>
+                                {error && <p className="mt-1 text-xs text-rose-500">{error}</p>}
                             </div>
 
                             <button
                                 type="submit"
                                 className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90"
                             >
-                                {t('auth.login')}
+                                {t('auth.sendResetCode')}
                             </button>
+
+                            <Link
+                                to="/login"
+                                className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 hover:text-primary transition-colors"
+                            >
+                                <ArrowLeft className="h-3 w-3" />
+                                {t('auth.backToLogin')}
+                            </Link>
                         </form>
 
                         <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-slate-400">
@@ -77,13 +84,6 @@ const Login = () => {
                         </p>
                     </div>
                 </div>
-
-                <div className="pb-8 text-center text-xs text-slate-500">
-                    {t('auth.noAccount')}
-                    <Link to="/signup" className="ml-2 font-semibold text-primary hover:text-primary/80 transition-colors">
-                        {t('auth.createAccount')}
-                    </Link>
-                </div>
             </div>
 
             <Footer />
@@ -91,5 +91,4 @@ const Login = () => {
     );
 };
 
-export default Login;
-
+export default ForgotPassword;
