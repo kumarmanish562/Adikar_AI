@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Globe, ChevronDown, Check } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,24 +10,7 @@ const languages = [
     { code: 'te', name: 'తెలుగు' },
     { code: 'mr', name: 'मराठी' },
     { code: 'ta', name: 'தமிழ்' },
-    { code: 'gu', name: 'ગુજરાતી' },
-    { code: 'ur', name: 'اردو' },
-    { code: 'kn', name: 'ಕನ್ನಡ' },
-    { code: 'ml', name: 'മലയാളം' },
-    { code: 'or', name: 'ଓଡ଼ିଆ' },
-    { code: 'pa', name: 'ਪੰਜਾਬੀ' },
-    { code: 'as', name: 'অসমীয়া' },
-    { code: 'mai', name: 'मैथिली' },
-    { code: 'sat', name: 'संताली' },
-    { code: 'ks', name: 'کأشُر' },
-    { code: 'ne', name: 'नेपाली' },
-    { code: 'sd', name: 'سنڌي' },
-    { code: 'kok', name: 'कोंकणी' },
-    { code: 'doi', name: 'डोगरी' },
-    { code: 'mni', name: 'মণিপুরী' },
-    { code: 'brx', name: 'बड़ो' },
-    { code: 'sa', name: 'संस्कृतम्' },
-    { code: 'cg', name: 'छत्तीसगढ़ी' }
+    { code: 'gu', name: 'ગુજરાતી' }
 ];
 
 const Navbar = () => {
@@ -52,7 +35,7 @@ const Navbar = () => {
                 <div className="flex justify-between h-16 items-center">
                     <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                         <div className="bg-primary p-1.5 rounded-md">
-                            <Globe className="text-white w-5 h-5" />
+                            <span className="text-white text-xl">⚖️</span>
                         </div>
                         <span className="text-xl font-bold tracking-tight text-primary uppercase">{t('auth.appName')}</span>
                     </Link>

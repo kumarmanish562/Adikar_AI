@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, Scale } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -6,11 +7,18 @@ import Footer from '../components/Footer';
 
 const VerifyOtp = () => {
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
     const [timer, setTimer] = useState(30);
     const [code, setCode] = useState(Array(6).fill(''));
 
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
+    };
+
+    const handleVerify = () => {
+        // Add your OTP verification logic here
+        // After successful verification, navigate to login
+        navigate('/login');
     };
 
     useEffect(() => {
@@ -70,6 +78,7 @@ const VerifyOtp = () => {
 
                             <button
                                 type="button"
+                                onClick={handleVerify}
                                 className="mt-6 w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90"
                             >
                                 {t('auth.verify')}

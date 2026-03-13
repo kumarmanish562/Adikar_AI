@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Lock, Mail, Scale, EyeOff, ShieldCheck } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -7,9 +7,17 @@ import Footer from '../components/Footer';
 
 const Login = () => {
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
 
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Add your login logic here
+        // After successful login, navigate to dashboard
+        navigate('/dashboard');
     };
 
     return (
@@ -31,7 +39,7 @@ const Login = () => {
                             <p className="mt-1 text-xs text-slate-400">{t('auth.tagline')}</p>
                         </div>
 
-                        <form className="mt-8 space-y-5">
+                        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                             <div>
                                 <label className="text-xs font-semibold text-slate-600">{t('auth.emailAddress')}</label>
                                 <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm">
