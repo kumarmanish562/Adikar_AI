@@ -1,9 +1,48 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const Dashboard = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+  const [recentQueries, setRecentQueries] = useState([]);
+  const [stats, setStats] = useState({ totalQueries: 0, documents: 0, voiceQueries: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      
+      // Fetch user profile
+      const profileRes = await axios.get('http://localhost:8000/api/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      setUserData(profileRes.data);
+
+      // Fetch recent queries
+      const queriesRes = await axios.get('http://localhost:8000/api/queries/my-queries', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      setRecentQueries(queriesRes.data.slice(0, 3)); // Get last 3 queries
+
+      // Calculate stats
+      const allQueries = queriesRes.data;
+      setStats({
+        totalQueries: allQueries.length,
+        documents: allQueries.filter(q => q.query_type === 'document').length,
+        voiceQueries: allQueries.filter(q => q.query_type === 'voice').length
+      });
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      setLoading(false);
+    }
+  };
 
   const mainFeatures = [
     {
@@ -39,12 +78,6 @@ const Dashboard = () => {
     { id: 'resources', icon: '📚', title: 'Legal Resources', description: 'Explore laws like BNS, BNSS, Consumer Protection.', color: 'bg-purple-500' }
   ];
 
-  const recentActivities = [
-    { id: 1, icon: '❓', title: 'How to file a consumer complaint for a faulty AC?', date: 'October 24, 2024', category: 'Consumer Law' },
-    { id: 2, icon: '📄', title: 'Rental Agreement Analysis - Sector 62 Noida', date: 'October 22, 2024', category: 'Property Law' },
-    { id: 3, icon: '🎤', title: 'Voice Query: Rights under Section 498A (Hindi)', date: 'October 20, 2024', category: 'Family Law' }
-  ];
-
   const legalCategories = [
     { id: 'bns', icon: '⚖️', title: 'BNS 2023', color: 'text-blue-500' },
     { id: 'bnss', icon: '📋', title: 'BNSS 2023', color: 'text-indigo-500' },
@@ -54,15 +87,52 @@ const Dashboard = () => {
     { id: 'property', icon: '🏠', title: 'Property Law', color: 'text-green-500' }
   ];
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin text-6xl mb-4">⚙️</div>
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-[1400px] mx-auto p-6">
       {/* Welcome Section */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Rahul Sharma</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Welcome back, {userData?.full_name || userData?.username || 'User'}
+        </h1>
         <p className="flex items-center gap-2 text-sm text-gray-500">
           <span className="text-base">⚡</span>
           Get instant legal guidance powered by Indian law.
         </p>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl p-6">
+          <div className="text-4xl mb-2">💬</div>
+          <div className="text-3xl font-bold mb-1">{stats.totalQueries}</div>
+          <div className="text-sm opacity-90">Total Queries</div>
+        </div>
+        <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-2xl p-6">
+          <div className="text-4xl mb-2">📄</div>
+          <div className="text-3xl font-bold mb-1">{stats.documents}</div>
+          <div className="text-sm opacity-90">Documents Scanned</div>
+        </div>
+        <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl p-6">
+          <div className="text-4xl mb-2">🎤</div>
+          <div className="text-3xl font-bold mb-1">{stats.voiceQueries}</div>
+          <div className="text-sm opacity-90">Voice Queries</div>
+        </div>
       </div>
 
       {/* Main Features */}
@@ -107,27 +177,45 @@ const Dashboard = () => {
               <div className="w-1 h-6 bg-orange-500 rounded"></div>
               <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
             </div>
-            <button className="px-4 py-1.5 bg-transparent border-none text-blue-500 text-sm font-medium cursor-pointer hover:text-blue-600">
+            <button 
+              onClick={() => navigate('/dashboard/my-queries')}
+              className="px-4 py-1.5 bg-transparent border-none text-blue-500 text-sm font-medium cursor-pointer hover:text-blue-600"
+            >
               View All History
             </button>
           </div>
 
-          <div className="flex flex-col gap-4">
-            {recentActivities.map((activity) => (
-              <div key={activity.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-xl flex-shrink-0">
-                  {activity.icon}
+          {recentQueries.length === 0 ? (
+            <div className="text-center py-10">
+              <div className="text-5xl mb-3">📝</div>
+              <p className="text-gray-500">No queries yet. Start by asking a question!</p>
+              <button
+                onClick={() => navigate('/dashboard/ask-question')}
+                className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Ask Your First Question
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {recentQueries.map((query) => (
+                <div key={query.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-xl flex-shrink-0">
+                    {query.query_type === 'voice' ? '🎤' : query.query_type === 'document' ? '📄' : '❓'}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-medium text-gray-900 mb-1">{query.question}</h4>
+                    <p className="text-xs text-gray-500">
+                      {formatDate(query.created_at)} • {query.status}
+                    </p>
+                  </div>
+                  <button className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-blue-500 text-[13px] font-medium cursor-pointer hover:bg-gray-50 hover:border-blue-500 flex-shrink-0">
+                    View Answer
+                  </button>
                 </div>
-                <div className="flex-1">
-                  <h4 className="text-sm font-medium text-gray-900 mb-1">{activity.title}</h4>
-                  <p className="text-xs text-gray-500">{activity.date} • {activity.category}</p>
-                </div>
-                <button className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-blue-500 text-[13px] font-medium cursor-pointer hover:bg-gray-50 hover:border-blue-500 flex-shrink-0">
-                  View Answer
-                </button>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Legal Categories */}

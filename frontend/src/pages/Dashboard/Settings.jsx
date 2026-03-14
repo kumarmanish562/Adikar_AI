@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const Settings = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   
   // Language mapping
   const languageMap = {
@@ -25,7 +26,9 @@ const Settings = () => {
     'gu': 'ગુજરાતી'
   };
   
-  const [selectedLanguage, setSelectedLanguage] = useState(reverseLanguageMap[i18n.language] || 'English');
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [notifications, setNotifications] = useState({
     emailAlerts: true,
     legalUpdates: true,
@@ -33,11 +36,35 @@ const Settings = () => {
   });
   const [hasChanges, setHasChanges] = useState(false);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   
-  // Update selected language when i18n language changes
+  // Fetch user data on mount
   useEffect(() => {
-    setSelectedLanguage(reverseLanguageMap[i18n.language] || 'English');
-  }, [i18n.language]);
+    fetchUserData();
+  }, []);
+  
+  // Update selected language when user data loads
+  useEffect(() => {
+    if (userData?.preferred_language) {
+      const langName = reverseLanguageMap[userData.preferred_language] || 'English';
+      setSelectedLanguage(langName);
+      i18n.changeLanguage(userData.preferred_language);
+    }
+  }, [userData]);
+  
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:8000/api/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      setUserData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setLoading(false);
+    }
+  };
   
   // Handle language selection
   const handleLanguageChange = (lang) => {
@@ -45,18 +72,63 @@ const Settings = () => {
     setHasChanges(true);
   };
   
-  // Save settings and change language
-  const handleSaveSettings = () => {
-    const languageCode = languageMap[selectedLanguage];
-    i18n.changeLanguage(languageCode);
-    setHasChanges(false);
-    setShowSaveSuccess(true);
-    
-    // Hide success message after 3 seconds
-    setTimeout(() => {
-      setShowSaveSuccess(false);
-    }, 3000);
+  // Handle notification changes
+  const handleNotificationChange = (key, value) => {
+    setNotifications({...notifications, [key]: value});
+    setHasChanges(true);
   };
+  
+  // Save settings to database
+  const handleSaveSettings = async () => {
+    setIsSaving(true);
+    try {
+      const token = localStorage.getItem('token');
+      const languageCode = languageMap[selectedLanguage];
+      
+      // Update user profile with new language preference
+      await axios.put(
+        'http://localhost:8000/api/profile',
+        {
+          preferred_language: languageCode,
+          // Include other fields to avoid overwriting
+          full_name: userData.full_name,
+          phone: userData.phone
+        },
+        {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }
+      );
+      
+      // Change i18n language
+      i18n.changeLanguage(languageCode);
+      
+      // Update local state
+      setUserData({...userData, preferred_language: languageCode});
+      setHasChanges(false);
+      setShowSaveSuccess(true);
+      
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        setShowSaveSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+      alert('Failed to save settings. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin text-6xl mb-4">⚙️</div>
+          <p className="text-gray-600">Loading settings...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 max-w-[1400px] mx-auto">
@@ -72,21 +144,22 @@ const Settings = () => {
           {hasChanges && (
             <button
               onClick={handleSaveSettings}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+              disabled={isSaving}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>💾</span>
-              Save Changes
+              <span>{isSaving ? '⏳' : '💾'}</span>
+              {isSaving ? 'Saving...' : 'Save Changes'}
             </button>
           )}
         </div>
         
         {/* Success Message */}
         {showSaveSuccess && (
-          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3 animate-fade-in">
             <span className="text-2xl">✅</span>
             <div>
               <p className="text-sm font-semibold text-green-900">Settings saved successfully!</p>
-              <p className="text-xs text-green-700">Your language preference has been updated across all pages.</p>
+              <p className="text-xs text-green-700">Your preferences have been updated in the database.</p>
             </div>
           </div>
         )}
@@ -112,7 +185,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-900">Change password</h3>
-                  <p className="text-xs text-gray-500">Last changed 3 months ago</p>
+                  <p className="text-xs text-gray-500">Update your account password</p>
                 </div>
               </div>
               <button className="px-4 py-2 text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors">
@@ -127,13 +200,13 @@ const Settings = () => {
                   <span className="text-xl">📧</span>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900">Update email</h3>
-                  <p className="text-xs text-gray-500">rajesh.kumar@example.law</p>
+                  <h3 className="text-sm font-semibold text-gray-900">Email address</h3>
+                  <p className="text-xs text-gray-500">{userData?.email || 'Not set'}</p>
                 </div>
               </div>
-              <button className="px-4 py-2 text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors">
-                Edit
-              </button>
+              <span className="px-3 py-1 bg-green-100 text-green-700 rounded-md text-xs font-semibold">
+                {userData?.is_verified ? 'Verified' : 'Not Verified'}
+              </span>
             </div>
 
             {/* Update Phone Number */}
@@ -143,13 +216,29 @@ const Settings = () => {
                   <span className="text-xl">📱</span>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900">Update phone number</h3>
-                  <p className="text-xs text-gray-500">+91 98765 43210</p>
+                  <h3 className="text-sm font-semibold text-gray-900">Phone number</h3>
+                  <p className="text-xs text-gray-500">{userData?.phone || 'Not set'}</p>
                 </div>
               </div>
               <button className="px-4 py-2 text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors">
                 Edit
               </button>
+            </div>
+
+            {/* Username */}
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                  <span className="text-xl">👤</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-900">Username</h3>
+                  <p className="text-xs text-gray-500">{userData?.username || 'Not set'}</p>
+                </div>
+              </div>
+              <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-semibold">
+                Unique ID
+              </span>
             </div>
           </div>
         </div>
@@ -168,7 +257,7 @@ const Settings = () => {
           {hasChanges && (
             <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-xs text-blue-800">
-                <span className="font-semibold">💡 Tip:</span> Click "Save Changes" button to apply the new language across all pages.
+                <span className="font-semibold">💡 Tip:</span> Click "Save Changes" button to save your language preference to the database.
               </p>
             </div>
           )}
@@ -227,7 +316,7 @@ const Settings = () => {
                   <input
                     type="checkbox"
                     checked={notifications.emailAlerts}
-                    onChange={(e) => setNotifications({...notifications, emailAlerts: e.target.checked})}
+                    onChange={(e) => handleNotificationChange('emailAlerts', e.target.checked)}
                     className="sr-only peer"
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -249,7 +338,7 @@ const Settings = () => {
                   <input
                     type="checkbox"
                     checked={notifications.legalUpdates}
-                    onChange={(e) => setNotifications({...notifications, legalUpdates: e.target.checked})}
+                    onChange={(e) => handleNotificationChange('legalUpdates', e.target.checked)}
                     className="sr-only peer"
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -271,7 +360,7 @@ const Settings = () => {
                   <input
                     type="checkbox"
                     checked={notifications.communityUpdates}
-                    onChange={(e) => setNotifications({...notifications, communityUpdates: e.target.checked})}
+                    onChange={(e) => handleNotificationChange('communityUpdates', e.target.checked)}
                     className="sr-only peer"
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -305,6 +394,16 @@ const Settings = () => {
             </button>
           </div>
 
+          {/* Account Info */}
+          <div className="mb-6 p-4 bg-gray-50 rounded-xl">
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">Account Information</h3>
+            <div className="space-y-2 text-sm text-gray-600">
+              <p><strong>Member since:</strong> {new Date(userData?.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+              <p><strong>Account ID:</strong> {userData?.id}</p>
+              <p><strong>Status:</strong> <span className={userData?.is_active ? 'text-green-600' : 'text-red-600'}>{userData?.is_active ? 'Active' : 'Inactive'}</span></p>
+            </div>
+          </div>
+
           {/* Danger Zone */}
           <div className="pt-6 border-t border-gray-200">
             <h3 className="text-base font-bold text-red-600 mb-2">Danger Zone</h3>
@@ -323,11 +422,12 @@ const Settings = () => {
         <div className="fixed bottom-8 right-8 z-50 animate-bounce">
           <button
             onClick={handleSaveSettings}
-            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full font-bold hover:from-blue-700 hover:to-blue-800 transition-all shadow-2xl hover:shadow-3xl flex items-center gap-3 text-lg"
+            disabled={isSaving}
+            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full font-bold hover:from-blue-700 hover:to-blue-800 transition-all shadow-2xl hover:shadow-3xl flex items-center gap-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="text-2xl">💾</span>
-            Save Changes
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span className="text-2xl">{isSaving ? '⏳' : '💾'}</span>
+            {isSaving ? 'Saving...' : 'Save Changes'}
+            {!isSaving && <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>}
           </button>
         </div>
       )}

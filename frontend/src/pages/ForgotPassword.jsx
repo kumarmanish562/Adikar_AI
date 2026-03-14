@@ -1,23 +1,49 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Phone, Scale, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Mail, Scale, ShieldCheck, ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const ForgotPassword = () => {
     const { t, i18n } = useTranslation();
-    const [mobile, setMobile] = useState('');
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!mobile.trim()) {
+        if (!email.trim()) {
             setError(t('validation.required'));
             return;
         }
-        // Handle forgot password logic here
-        console.log('Reset password for:', mobile);
+        
+        setLoading(true);
+        setError('');
+        
+        try {
+            const response = await fetch('/api/auth/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+            
+            if (response.ok) {
+                // Redirect to OTP verification page with email
+                navigate('/verify-otp', { state: { email, purpose: 'password_reset' } });
+            } else {
+                const errorData = await response.json();
+                setError(errorData.detail || 'Failed to send reset email');
+            }
+        } catch (error) {
+            setError('Network error. Please try again.');
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const changeLanguage = (lang) => {
@@ -45,14 +71,14 @@ const ForgotPassword = () => {
 
                         <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                             <div>
-                                <label className="text-xs font-semibold text-slate-600">{t('auth.mobileNumber')}</label>
+                                <label className="text-xs font-semibold text-slate-600">{t('auth.emailAddress')}</label>
                                 <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm">
-                                    <Phone className="h-4 w-4 text-slate-400" />
+                                    <Mail className="h-4 w-4 text-slate-400" />
                                     <input
-                                        type="tel"
-                                        placeholder={t('auth.mobilePlaceholder')}
-                                        value={mobile}
-                                        onChange={(e) => setMobile(e.target.value)}
+                                        type="email"
+                                        placeholder={t('auth.emailPlaceholder')}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         className="w-full text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
                                     />
                                 </div>
@@ -61,9 +87,10 @@ const ForgotPassword = () => {
 
                             <button
                                 type="submit"
-                                className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90"
+                                disabled={loading}
+                                className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {t('auth.sendResetCode')}
+                                {loading ? 'Sending...' : t('auth.sendResetCode')}
                             </button>
 
                             <Link

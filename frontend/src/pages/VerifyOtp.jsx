@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, Scale } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -8,17 +8,63 @@ import Footer from '../components/Footer';
 const VerifyOtp = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation();
     const [timer, setTimer] = useState(30);
     const [code, setCode] = useState(Array(6).fill(''));
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    
+    const email = location.state?.email || '';
+    const purpose = location.state?.purpose || 'password_reset';
+    
+    // Redirect if no email provided
+    useEffect(() => {
+        if (!email) {
+            navigate('/forgot-password');
+        }
+    }, [email, navigate]);
 
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
     };
 
-    const handleVerify = () => {
-        // Add your OTP verification logic here
-        // After successful verification, navigate to login
-        navigate('/login');
+    const handleVerify = async () => {
+        const otpCode = code.join('');
+        
+        if (otpCode.length !== 6) {
+            setError('Please enter the complete 6-digit code');
+            return;
+        }
+        
+        setLoading(true);
+        setError('');
+        
+        try {
+            const response = await fetch('/api/auth/verify-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, otp: otpCode }),
+            });
+            
+            if (response.ok) {
+                // OTP verified, redirect to reset password page or login
+                if (purpose === 'password_reset') {
+                    navigate('/reset-password', { state: { email, otp: otpCode } });
+                } else {
+                    navigate('/login');
+                }
+            } else {
+                const errorData = await response.json();
+                setError(errorData.detail || 'Invalid or expired OTP');
+            }
+        } catch (error) {
+            setError('Network error. Please try again.');
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -71,17 +117,20 @@ const VerifyOtp = () => {
                                         maxLength={1}
                                         value={code[index]}
                                         onChange={(event) => handleCodeChange(index, event.target.value)}
-                                        className="h-12 w-12 rounded-2xl border border-slate-200 text-center text-sm font-semibold text-slate-700 shadow-sm focus:outline-none"
+                                        className="h-12 w-12 rounded-2xl border border-slate-200 text-center text-sm font-semibold text-slate-700 shadow-sm focus:outline-none focus:border-primary"
                                     />
                                 ))}
                             </div>
+                            
+                            {error && <p className="mt-3 text-center text-xs text-rose-500">{error}</p>}
 
                             <button
                                 type="button"
                                 onClick={handleVerify}
-                                className="mt-6 w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90"
+                                disabled={loading}
+                                className="mt-6 w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {t('auth.verify')}
+                                {loading ? 'Verifying...' : t('auth.verify')}
                             </button>
 
                             <div className="mt-4 text-center text-xs text-slate-500">
