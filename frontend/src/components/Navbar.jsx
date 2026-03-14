@@ -27,7 +27,7 @@ const Navbar = () => {
 
     // Determine which button to show based on current route
     const isLoginPage = location.pathname === '/login';
-    const isSignupPage = location.pathname === '/signup';
+    const isCreateAccountPage = location.pathname === '/create-account';
 
     return (
         <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
@@ -76,10 +76,10 @@ const Navbar = () => {
                             )}
                         </div>
                         {isLoginPage ? (
-                            <Link to="/signup" className="bg-primary text-white text-sm font-medium px-4 py-1.5 rounded-md hover:bg-primary/90 transition-all flex items-center gap-2">
+                            <Link to="/create-account" className="bg-primary text-white text-sm font-medium px-4 py-1.5 rounded-md hover:bg-primary/90 transition-all flex items-center gap-2">
                                 {t('auth.createAccount')}
                             </Link>
-                        ) : isSignupPage ? (
+                        ) : isCreateAccountPage ? (
                             <Link to="/login" className="bg-primary text-white text-sm font-medium px-4 py-1.5 rounded-md hover:bg-primary/90 transition-all flex items-center gap-2">
                                 {t('nav.login')}
                             </Link>

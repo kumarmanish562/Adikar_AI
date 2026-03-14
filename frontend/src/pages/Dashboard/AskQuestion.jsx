@@ -32,31 +32,42 @@ const AskQuestion = () => {
       // Get auth token from localStorage
       const token = localStorage.getItem('token');
       
-      // Call backend API
+      // Call backend API using proxy (temporary no-auth for testing)
       const response = await axios.post(
-        'http://localhost:8000/api/queries/ask',
+        '/api/queries/ask-no-auth',
         {
           question: currentQuestion,
           language: 'en'
         },
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         }
       );
 
+      console.log('API Response:', response.data);
+      
+      // Ensure we have valid data
+      const answerText = response.data.answer || response.data.explanation || 'No answer received';
+      const legalRefs = Array.isArray(response.data.legalReferences) ? response.data.legalReferences : [];
+      const actionSteps = Array.isArray(response.data.actionSteps) ? response.data.actionSteps : [];
+      const sources = Array.isArray(response.data.sources) ? response.data.sources : [];
+
+      console.log('Processed answer text length:', answerText.length);
+
       const assistantMessage = {
         id: Date.now() + 1,
         type: 'assistant',
         content: {
-          explanation: response.data.explanation || response.data.answer,
-          legalReferences: response.data.legalReferences || [],
-          actionSteps: response.data.actionSteps || [],
-          sources: response.data.sources?.map(s => typeof s === 'string' ? s : s.source) || []
+          explanation: answerText,
+          legalReferences: legalRefs,
+          actionSteps: actionSteps,
+          sources: sources.map(s => typeof s === 'string' ? s : s.source || s)
         }
       };
+
+      console.log('Assistant message:', assistantMessage);
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {

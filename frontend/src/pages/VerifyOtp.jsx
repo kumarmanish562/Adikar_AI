@@ -13,6 +13,7 @@ const VerifyOtp = () => {
     const [code, setCode] = useState(Array(6).fill(''));
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [resending, setResending] = useState(false);
     
     const email = location.state?.email || '';
     const purpose = location.state?.purpose || 'password_reset';
@@ -20,12 +21,51 @@ const VerifyOtp = () => {
     // Redirect if no email provided
     useEffect(() => {
         if (!email) {
-            navigate('/forgot-password');
+            if (purpose === 'registration') {
+                navigate('/create-account');
+            } else {
+                navigate('/forgot-password');
+            }
         }
-    }, [email, navigate]);
+    }, [email, navigate, purpose]);
 
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
+    };
+
+    const handleResendOtp = async () => {
+        setResending(true);
+        setError('');
+        
+        try {
+            let endpoint = '/api/auth/forgot-password';
+            let body = { email };
+            
+            if (purpose === 'registration') {
+                endpoint = '/api/auth/register';
+                body = location.state?.user_data || { email };
+            }
+            
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+            
+            if (response.ok) {
+                setTimer(30); // Reset timer
+                setCode(Array(6).fill('')); // Clear code
+                // Success message could be shown here
+            } else {
+                setError('Failed to resend OTP. Please try again.');
+            }
+        } catch (error) {
+            setError('Network error. Please try again.');
+        } finally {
+            setResending(false);
+        }
     };
 
     const handleVerify = async () => {
@@ -40,24 +80,48 @@ const VerifyOtp = () => {
         setError('');
         
         try {
-            const response = await fetch('/api/auth/verify-otp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, otp: otpCode }),
-            });
-            
-            if (response.ok) {
-                // OTP verified, redirect to reset password page or login
-                if (purpose === 'password_reset') {
-                    navigate('/reset-password', { state: { email, otp: otpCode } });
+            if (purpose === 'registration') {
+                // Handle registration OTP verification
+                const response = await fetch('/api/auth/verify-registration-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        email, 
+                        otp: otpCode,
+                        user_data: location.state?.user_data
+                    }),
+                });
+                
+                if (response.ok) {
+                    // Registration completed, redirect to login
+                    navigate('/login', { 
+                        state: { 
+                            message: 'Account created successfully! Please login.' 
+                        } 
+                    });
                 } else {
-                    navigate('/login');
+                    const errorData = await response.json();
+                    setError(errorData.detail || 'Invalid or expired OTP');
                 }
             } else {
-                const errorData = await response.json();
-                setError(errorData.detail || 'Invalid or expired OTP');
+                // Handle password reset OTP verification
+                const response = await fetch('/api/auth/verify-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, otp: otpCode }),
+                });
+                
+                if (response.ok) {
+                    // OTP verified, redirect to reset password page
+                    navigate('/reset-password', { state: { email, otp: otpCode } });
+                } else {
+                    const errorData = await response.json();
+                    setError(errorData.detail || 'Invalid or expired OTP');
+                }
             }
         } catch (error) {
             setError('Network error. Please try again.');
@@ -108,7 +172,7 @@ const VerifyOtp = () => {
                         </div>
 
                         <div className="mt-8">
-                            <div className="flex justify-center gap-2">
+                            <div className="flex justify-center gap-3">
                                 {Array.from({ length: 6 }).map((_, index) => (
                                     <input
                                         key={`otp-${index}`}
@@ -117,30 +181,45 @@ const VerifyOtp = () => {
                                         maxLength={1}
                                         value={code[index]}
                                         onChange={(event) => handleCodeChange(index, event.target.value)}
-                                        className="h-12 w-12 rounded-2xl border border-slate-200 text-center text-sm font-semibold text-slate-700 shadow-sm focus:outline-none focus:border-primary"
+                                        className="h-14 w-14 rounded-xl border-2 border-slate-300 text-center text-lg font-bold text-slate-800 bg-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                                        style={{
+                                            fontSize: '18px',
+                                            fontWeight: 'bold'
+                                        }}
                                     />
                                 ))}
                             </div>
                             
-                            {error && <p className="mt-3 text-center text-xs text-rose-500">{error}</p>}
+                            {error && <p className="mt-4 text-center text-sm text-red-500 font-medium">{error}</p>}
 
                             <button
                                 type="button"
                                 onClick={handleVerify}
                                 disabled={loading}
-                                className="mt-6 w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="mt-8 w-full rounded-xl bg-blue-600 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                             >
                                 {loading ? 'Verifying...' : t('auth.verify')}
                             </button>
 
-                            <div className="mt-4 text-center text-xs text-slate-500">
-                                {t('auth.resendIn', { time: formattedTimer })}
+                            <div className="mt-6 text-center text-sm text-slate-600">
+                                {timer > 0 ? (
+                                    <span>Resend OTP in {formattedTimer}</span>
+                                ) : (
+                                    <button 
+                                        type="button" 
+                                        onClick={handleResendOtp}
+                                        disabled={resending}
+                                        className="font-semibold text-blue-600 hover:text-blue-800 transition-colors disabled:opacity-50"
+                                    >
+                                        {resending ? 'Resending...' : 'Resend OTP'}
+                                    </button>
+                                )}
                             </div>
 
-                            <div className="mt-4 text-center text-xs text-slate-500">
-                                <span className="text-slate-400">{t('auth.noCode')}</span>
-                                <button type="button" className="ml-2 font-semibold text-primary hover:text-primary/80 transition-colors">
-                                    {t('auth.contactSupport')}
+                            <div className="mt-4 text-center text-sm text-slate-500">
+                                <span>Didn't receive the code? </span>
+                                <button type="button" className="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                                    Contact Support
                                 </button>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import Resources from './pages/Resources';
@@ -9,6 +10,7 @@ import Login from './pages/Login';
 import CreateAccount from './pages/CreateAccount';
 import VerifyOtp from './pages/VerifyOtp';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import DashboardLayout from './pages/Dashboard/DashboardLayout';
 import Dashboard from './pages/Dashboard/Dashboard';
 import AskQuestion from './pages/Dashboard/AskQuestion';
@@ -20,10 +22,11 @@ import HelpCenter from './pages/Dashboard/HelpCenter';
 import Profile from './pages/Dashboard/Profile';
 import Settings from './pages/Dashboard/Settings';
 import Footer from './components/Footer';
+import MLTest from './components/MLTest';
 
 const AppContent = () => {
   const location = useLocation();
-  const hideChrome = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/verify' || location.pathname === '/forgot-password';
+  const hideChrome = location.pathname === '/login' || location.pathname === '/create-account' || location.pathname === '/verify-otp' || location.pathname === '/forgot-password' || location.pathname === '/reset-password';
   const isDashboard = location.pathname.startsWith('/dashboard');
 
   return (
@@ -37,10 +40,15 @@ const AppContent = () => {
           <Route path="/resources" element={<Resources />} />
           <Route path="/help" element={<Help />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<CreateAccount />} />
-          <Route path="/verify" element={<VerifyOtp />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/verify-otp" element={<VerifyOtp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/dashboard/*" element={<DashboardLayout />}>
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/dashboard/*" element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }>
             <Route index element={<Dashboard />} />
             <Route path="ask-question" element={<AskQuestion />} />
             <Route path="scan-document" element={<ScanDocument />} />
@@ -50,6 +58,7 @@ const AppContent = () => {
             <Route path="help-center" element={<HelpCenter />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="ml-test" element={<MLTest />} />
           </Route>
         </Routes>
       </div>

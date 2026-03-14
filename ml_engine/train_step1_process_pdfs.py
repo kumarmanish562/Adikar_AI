@@ -62,11 +62,11 @@ def main():
         print(f"   ✅ Created {len(english_chunks)} chunks\n")
     
     # Process Hindi PDFs
-    # if HINDI_PDFS.exists():
-    #     print("📄 Processing Hindi PDFs...")
-    #     hindi_chunks = process_pdfs(HINDI_PDFS, "hindi")
-    #     all_chunks.extend(hindi_chunks)
-    #     print(f"   ✅ Created {len(hindi_chunks)} chunks\\n")
+    if HINDI_PDFS.exists():
+        print("📄 Processing Hindi PDFs...")
+        hindi_chunks = process_pdfs(HINDI_PDFS, "hindi")
+        all_chunks.extend(hindi_chunks)
+        print(f"   ✅ Created {len(hindi_chunks)} chunks\n")
     
     if not all_chunks:
         print("❌ No chunks created. Please check your PDF directories.")

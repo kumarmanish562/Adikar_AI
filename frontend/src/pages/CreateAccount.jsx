@@ -23,6 +23,7 @@ const CreateAccount = () => {
     });
 
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (field) => (event) => {
         setForm((prev) => ({ ...prev, [field]: event.target.value }));
@@ -32,8 +33,7 @@ const CreateAccount = () => {
         setForm((prev) => ({ ...prev, [field]: event.target.checked }));
     };
 
-    const handleSubmit = (event) => {
-
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const nextErrors = {};
 
@@ -66,7 +66,61 @@ const CreateAccount = () => {
         setErrors(nextErrors);
 
         if (Object.keys(nextErrors).length === 0) {
-            navigate('/verify');
+            setLoading(true);
+            
+            try {
+                // Call backend API to register user
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: form.email,
+                        password: form.password,
+                        full_name: form.fullName,
+                        phone: form.mobile
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.requires_otp) {
+                        // Registration initiated, go to OTP verification
+                        navigate('/verify-otp', { 
+                            state: { 
+                                email: form.email,
+                                purpose: 'registration',
+                                user_data: {
+                                    email: form.email,
+                                    password: form.password,
+                                    full_name: form.fullName,
+                                    phone: form.mobile
+                                }
+                            } 
+                        });
+                    } else {
+                        // Direct registration (fallback)
+                        navigate('/login', { 
+                            state: { 
+                                message: 'Account created successfully! Please login.' 
+                            } 
+                        });
+                    }
+                } else {
+                    const errorData = await response.json();
+                    setErrors({ 
+                        submit: errorData.detail || 'Registration failed. Please try again.' 
+                    });
+                }
+            } catch (error) {
+                setErrors({ 
+                    submit: 'Network error. Please check your connection and try again.' 
+                });
+                console.error('Registration error:', error);
+            } finally {
+                setLoading(false);
+            }
         }
     };
 
@@ -276,12 +330,20 @@ const CreateAccount = () => {
 
                             </div>
 
+                            {/* SUBMIT ERROR */}
+                            {errors.submit && (
+                                <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs text-rose-600">
+                                    {errors.submit}
+                                </div>
+                            )}
+
                             {/* SUBMIT BUTTON */}
                             <button
                                 type="submit"
-                                className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg hover:bg-primary/90"
+                                disabled={loading}
+                                className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                             >
-                                {t('auth.createAccount')}
+                                {loading ? 'Creating Account...' : t('auth.createAccount')}
                             </button>
 
                             {/* PRIVACY */}

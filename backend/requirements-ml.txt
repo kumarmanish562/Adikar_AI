@@ -1,0 +1,5 @@
+# ML dependencies - install separately after core backend works
+sentence-transformers
+faiss-cpu
+numpy
+torch

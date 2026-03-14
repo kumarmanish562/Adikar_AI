@@ -1,23 +1,95 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Lock, Mail, Scale, EyeOff, ShieldCheck } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { setToken } from '../utils/auth';
 
 const Login = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation();
+    const [successMessage, setSuccessMessage] = useState('');
+    const [form, setForm] = useState({
+        email: '',
+        password: ''
+    });
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        // Check if there's a success message from registration
+        if (location.state?.message) {
+            setSuccessMessage(location.state.message);
+            // Clear the message after 5 seconds
+            setTimeout(() => setSuccessMessage(''), 5000);
+        }
+    }, [location]);
 
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
     };
 
-    const handleSubmit = (e) => {
+    const handleChange = (field) => (event) => {
+        setForm((prev) => ({ ...prev, [field]: event.target.value }));
+        // Clear error when user starts typing
+        if (errors[field]) {
+            setErrors((prev) => ({ ...prev, [field]: '' }));
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Add your login logic here
-        // After successful login, navigate to dashboard
-        navigate('/dashboard');
+        const nextErrors = {};
+
+        // Validation
+        if (!form.email.trim()) {
+            nextErrors.email = "Email is required";
+        }
+        if (!form.password.trim()) {
+            nextErrors.password = "Password is required";
+        }
+
+        setErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length === 0) {
+            setLoading(true);
+            
+            try {
+                // Call backend login API
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: form.email,
+                        password: form.password
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Store the token using auth utility
+                    setToken(data.access_token);
+                    // Navigate to dashboard
+                    navigate('/dashboard');
+                } else {
+                    const errorData = await response.json();
+                    setErrors({ 
+                        submit: errorData.detail || 'Login failed. Please check your credentials.' 
+                    });
+                }
+            } catch (error) {
+                setErrors({ 
+                    submit: 'Network error. Please check your connection and try again.' 
+                });
+                console.error('Login error:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
     };
 
     return (
@@ -40,6 +112,13 @@ const Login = () => {
                         </div>
 
                         <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+                            {/* Success Message */}
+                            {successMessage && (
+                                <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-xs text-green-600">
+                                    ✓ {successMessage}
+                                </div>
+                            )}
+                            
                             <div>
                                 <label className="text-xs font-semibold text-slate-600">{t('auth.emailAddress')}</label>
                                 <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm">
@@ -47,9 +126,14 @@ const Login = () => {
                                     <input
                                         type="email"
                                         placeholder={t('auth.emailPlaceholder')}
+                                        value={form.email}
+                                        onChange={handleChange('email')}
                                         className="w-full text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
                                     />
                                 </div>
+                                {errors.email && (
+                                    <p className="mt-1 text-xs text-rose-500">{errors.email}</p>
+                                )}
                             </div>
 
                             <div>
@@ -62,17 +146,30 @@ const Login = () => {
                                     <input
                                         type="password"
                                         placeholder="********"
+                                        value={form.password}
+                                        onChange={handleChange('password')}
                                         className="w-full text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
                                     />
                                     <EyeOff className="h-4 w-4 text-slate-300" />
                                 </div>
+                                {errors.password && (
+                                    <p className="mt-1 text-xs text-rose-500">{errors.password}</p>
+                                )}
                             </div>
+
+                            {/* Submit Error */}
+                            {errors.submit && (
+                                <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs text-rose-600">
+                                    {errors.submit}
+                                </div>
+                            )}
 
                             <button
                                 type="submit"
-                                className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90"
+                                disabled={loading}
+                                className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {t('auth.login')}
+                                {loading ? 'Signing in...' : t('auth.login')}
                             </button>
                         </form>
 
@@ -88,7 +185,7 @@ const Login = () => {
 
                 <div className="pb-8 text-center text-xs text-slate-500">
                     {t('auth.noAccount')}
-                    <Link to="/signup" className="ml-2 font-semibold text-primary hover:text-primary/80 transition-colors">
+                    <Link to="/create-account" className="ml-2 font-semibold text-primary hover:text-primary/80 transition-colors">
                         {t('auth.createAccount')}
                     </Link>
                 </div>

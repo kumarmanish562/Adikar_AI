@@ -1,0 +1,352 @@
+# ================================
+# Python Backend .gitignore
+# ================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff (if applicable):
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff (if applicable):
+instance/
+.webassets-cache
+
+# Scrapy stuff (if applicable):
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Virtual Environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+rag_env/
+myenv/
+.env/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# ================================
+# Environment Variables (CRITICAL!)
+# ================================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+.env.test
+*.env
+
+# ================================
+# Database Files
+# ================================
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite3-journal
+*.db-journal
+database.db
+test.db
+
+# PostgreSQL
+*.sql.backup
+*.dump
+
+# ================================
+# Logs & Monitoring
+# ================================
+*.log
+logs/
+log/
+*.log.*
+access.log
+error.log
+debug.log
+app.log
+
+# ================================
+# File Uploads & Temporary Files
+# ================================
+uploads/
+upload/
+temp/
+tmp/
+*.tmp
+*.temp
+media/
+static/uploads/
+
+# ================================
+# ML & AI Models (Large Files)
+# ================================
+*.pkl
+*.pickle
+*.bin
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.pb
+*.model
+models/
+checkpoints/
+weights/
+embeddings/
+*.faiss
+*.index
+
+# Hugging Face cache
+.cache/
+transformers_cache/
+huggingface_hub/
+
+# ================================
+# FastAPI Specific
+# ================================
+.pytest_cache/
+test_*.py
+*_test.py
+tests/__pycache__/
+
+# ================================
+# IDE & Editor Files
+# ================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ================================
+# OS Generated Files
+# ================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ================================
+# Security & Credentials
+# ================================
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+auth/
+private/
+.secrets
+config/secrets.json
+
+# API Keys
+api_keys.txt
+.api_keys
+keys.json
+
+# ================================
+# Backup Files
+# ================================
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+*~
+
+# ================================
+# Documentation Build
+# ================================
+docs/_build/
+docs/build/
+site/
+
+# ================================
+# Package managers
+# ================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ================================
+# Monitoring & Profiling
+# ================================
+.prof
+*.prof
+.benchmarks/
+
+# ================================
+# Custom Project Files
+# ================================
+# Add your specific files here
+test_*.py
+debug_*.py
+scratch/
+experiments/
+notebooks/
+*.ipynb
+
+# Local configuration overrides
+local_config.py
+dev_config.py
+
