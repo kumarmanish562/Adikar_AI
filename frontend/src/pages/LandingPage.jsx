@@ -2,14 +2,25 @@ import React from 'react';
 import Hero from '../components/LandingPage/Hero';
 import Features from '../components/LandingPage/Features';
 import HowItWorks from '../components/LandingPage/HowItWorks';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Palette } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 
 const LandingPage = () => {
     const { t } = useTranslation();
+    const { theme, toggleTheme } = useTheme();
 
     return (
-        <main>
+        <main className={theme === 'white' ? 'white-theme' : ''}>
+            {/* Theme Toggle Button */}
+            <button
+                onClick={toggleTheme}
+                className="fixed bottom-6 right-6 z-50 p-4 bg-white border-2 border-slate-200 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110"
+                title={theme === 'color' ? 'Switch to White Theme' : 'Switch to Color Theme'}
+            >
+                <Palette className={`w-6 h-6 ${theme === 'color' ? 'text-primary' : 'text-slate-700'}`} />
+            </button>
+
             <Hero />
 
             {/* Features Section */}

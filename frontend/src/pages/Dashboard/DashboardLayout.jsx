@@ -1,12 +1,36 @@
 import { Outlet } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 
 const DashboardLayout = () => {
-  const userData = {
-    name: 'Manish Kumar',
-    role: 'Verified Professional',
+  const [userData, setUserData] = useState({
+    name: 'User',
+    role: 'User',
     avatar: null
+  });
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('/api/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      setUserData({
+        name: response.data.full_name || response.data.username || 'User',
+        role: response.data.role || 'User',
+        avatar: response.data.avatar || null
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      // Keep default values if fetch fails
+    }
   };
 
   return (

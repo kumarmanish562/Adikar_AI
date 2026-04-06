@@ -36,4 +36,51 @@
   .glass-card {
     @apply bg-white/80 backdrop-blur-md border border-slate-100 rounded-xl p-6 shadow-sm;
   }
+
+  /* White Theme Styles */
+  .white-theme {
+    @apply bg-white;
+  }
+
+  .white-theme h1,
+  .white-theme h2,
+  .white-theme h3 {
+    @apply text-slate-900;
+  }
+
+  .white-theme p {
+    @apply text-slate-600;
+  }
+
+  .white-theme .btn-primary {
+    @apply bg-slate-900 text-white hover:bg-slate-800;
+  }
+
+  .white-theme .btn-secondary {
+    @apply border-slate-300 text-slate-900 hover:bg-slate-100;
+  }
+
+  .white-theme .glass-card {
+    @apply bg-white border-slate-200;
+  }
+
+  .white-theme .text-primary {
+    @apply text-slate-900;
+  }
+
+  .white-theme .text-secondary {
+    @apply text-slate-700;
+  }
+
+  .white-theme .bg-primary {
+    @apply bg-slate-900;
+  }
+
+  .white-theme .bg-secondary {
+    @apply bg-slate-100;
+  }
+
+  .white-theme .border-primary {
+    @apply border-slate-300;
+  }
 }

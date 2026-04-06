@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const AskQuestion = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -32,16 +34,22 @@ const AskQuestion = () => {
       // Get auth token from localStorage
       const token = localStorage.getItem('token');
       
-      // Call backend API using proxy (temporary no-auth for testing)
+      if (!token) {
+        throw new Error('Please log in to ask questions');
+      }
+      
+      // Call authenticated backend API that saves queries
       const response = await axios.post(
-        '/api/queries/ask-no-auth',
+        'http://localhost:8000/api/queries/ask',
         {
           question: currentQuestion,
-          language: 'en'
+          language: 'en',
+          query_type: 'text'
         },
         {
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           }
         }
       );
@@ -70,6 +78,19 @@ const AskQuestion = () => {
       console.log('Assistant message:', assistantMessage);
 
       setMessages(prev => [...prev, assistantMessage]);
+      
+      // Show success message and option to go to history
+      setTimeout(() => {
+        const successMessage = {
+          id: Date.now() + 2,
+          type: 'system',
+          content: {
+            message: 'Query saved successfully! You can view it in your history.',
+            showHistoryButton: true
+          }
+        };
+        setMessages(prev => [...prev, successMessage]);
+      }, 1000);
     } catch (error) {
       console.error('Error asking question:', error);
       
@@ -123,6 +144,21 @@ const AskQuestion = () => {
                   </div>
                   <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0 bg-yellow-100">
                     👤
+                  </div>
+                </div>
+              ) : message.type === 'system' ? (
+                <div className="flex justify-center">
+                  <div className="bg-green-50 border border-green-200 rounded-2xl p-4 max-w-md text-center">
+                    <div className="text-green-600 text-2xl mb-2">✅</div>
+                    <p className="text-green-800 text-sm mb-3">{message.content.message}</p>
+                    {message.content.showHistoryButton && (
+                      <button
+                        onClick={() => navigate('/dashboard/my-queries')}
+                        className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors"
+                      >
+                        View History
+                      </button>
+                    )}
                   </div>
                 </div>
               ) : (

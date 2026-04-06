@@ -46,10 +46,11 @@ const VoiceAssistant = () => {
         
         // Send question to backend
         const result = await axios.post(
-          'http://localhost:8000/api/queries/ask',
+          '/api/queries/ask',
           {
             question: transcript,
-            language: selectedLanguage === 'Hindi' ? 'hi' : 'en'
+            language: selectedLanguage === 'Hindi' ? 'hi' : 'en',
+            query_type: 'voice'  // Add this to identify voice queries
           },
           {
             headers: {

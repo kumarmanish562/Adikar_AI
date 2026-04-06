@@ -23,6 +23,7 @@ import Profile from './pages/Dashboard/Profile';
 import Settings from './pages/Dashboard/Settings';
 import Footer from './components/Footer';
 import MLTest from './components/MLTest';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 const AppContent = () => {
   const location = useLocation();
@@ -70,9 +71,11 @@ const AppContent = () => {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </ThemeProvider>
   );
 }
 

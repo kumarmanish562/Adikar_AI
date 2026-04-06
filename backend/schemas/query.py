@@ -25,6 +25,7 @@ class QueryResponse(BaseModel):
 class AskQuestionRequest(BaseModel):
     question: str
     language: Optional[str] = "en"
+    query_type: Optional[str] = "text"
 
 class AskQuestionResponse(BaseModel):
     answer: str

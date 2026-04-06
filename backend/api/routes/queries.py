@@ -65,56 +65,6 @@ async def ask_question_stream(
     return StreamingResponse(generate_stream(), media_type="text/plain")
 
 @router.post("/ask", response_model=AskQuestionResponse)
-async def ask_question_stream(
-    request: AskQuestionRequest,
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """Stream real-time ML responses"""
-    async def generate_stream():
-        try:
-            # Send initial status
-            yield f"data: {json.dumps({'type': 'status', 'message': 'Processing your question...'})}\n\n"
-            
-            # Search for relevant chunks
-            yield f"data: {json.dumps({'type': 'status', 'message': 'Searching legal documents...'})}\n\n"
-            relevant_chunks = ml_service.search_similar_chunks(request.question, top_k=15)
-            
-            if relevant_chunks:
-                yield f"data: {json.dumps({'type': 'status', 'message': f'Found {len(relevant_chunks)} relevant sections'})}\n\n"
-                
-                # Generate answer
-                yield f"data: {json.dumps({'type': 'status', 'message': 'Generating answer...'})}\n\n"
-                result = ml_service.generate_answer(request.question, request.language)
-                
-                # Stream the complete result
-                yield f"data: {json.dumps({'type': 'answer', 'data': result})}\n\n"
-                
-                # Save to database
-                new_query = Query(
-                    user_id=current_user.id,
-                    question=request.question,
-                    answer=result.get("answer", ""),
-                    language=request.language,
-                    query_type="text",
-                    legal_references=result.get("legalReferences", []),
-                    action_steps=result.get("actionSteps", []),
-                    sources=[s.get("source", "") if isinstance(s, dict) else str(s) for s in result.get("sources", [])],
-                    confidence_score=0.8,
-                    status="completed"
-                )
-                db.add(new_query)
-                db.commit()
-                
-                yield f"data: {json.dumps({'type': 'complete', 'query_id': new_query.id})}\n\n"
-            else:
-                yield f"data: {json.dumps({'type': 'error', 'message': 'No relevant information found'})}\n\n"
-                
-        except Exception as e:
-            yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
-    
-    return StreamingResponse(generate_stream(), media_type="text/plain")
-
 def ask_question(
     request: AskQuestionRequest,
     current_user: User = Depends(get_current_user),
@@ -135,11 +85,11 @@ def ask_question(
             question=request.question,
             answer=result.get("answer", ""),
             language=request.language,
-            query_type="text",
+            query_type=request.query_type or "text",
             legal_references=result.get("legalReferences", []),
             action_steps=result.get("actionSteps", []),
             sources=[s.get("source", "") if isinstance(s, dict) else str(s) for s in result.get("sources", [])],
-            confidence_score=0.5,
+            confidence_score=0.8 if request.query_type == "voice" else 0.5,
             status="completed"
         )
         db.add(new_query)
@@ -228,17 +178,77 @@ def search_legal_chunks(
         "high_relevance": len([c for c in chunks if c["score"] > 0.7])
     }
 
-@router.get("/{query_id}", response_model=QueryResponse)
-def get_query_suggestions(
-    q: str,
-    current_user: User = Depends(get_current_user)
+@router.get("/stats")
+def get_query_stats(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
 ):
-    """Get real-time query suggestions"""
-    if len(q) < 3:
-        return {"suggestions": []}
+    """Get user query statistics for dashboard"""
+    try:
+        # Get all user queries
+        all_queries = db.query(Query).filter(Query.user_id == current_user.id).all()
+        
+        # Calculate statistics
+        total_queries = len(all_queries)
+        voice_queries = len([q for q in all_queries if q.query_type == 'voice'])
+        document_queries = len([q for q in all_queries if q.query_type == 'document'])
+        text_queries = len([q for q in all_queries if q.query_type == 'text'])
+        
+        # Get recent queries (last 5)
+        recent_queries = db.query(Query).filter(Query.user_id == current_user.id)\
+                          .order_by(Query.created_at.desc()).limit(5).all()
+        
+        return {
+            "total_queries": total_queries,
+            "voice_queries": voice_queries,
+            "document_queries": document_queries,
+            "text_queries": text_queries,
+            "recent_queries": [
+                {
+                    "id": q.id,
+                    "question": q.question,
+                    "query_type": q.query_type,
+                    "status": q.status,
+                    "created_at": q.created_at.isoformat()
+                } for q in recent_queries
+            ]
+        }
+    except Exception as e:
+        print(f"Error getting stats: {e}")
+        return {
+            "total_queries": 0,
+            "voice_queries": 0,
+            "document_queries": 0,
+            "text_queries": 0,
+            "recent_queries": []
+        }
+
+@router.get("/{query_id}", response_model=QueryResponse)
+def get_query(
+    query_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    query = db.query(Query).filter(Query.id == query_id, Query.user_id == current_user.id).first()
+    if not query:
+        raise HTTPException(status_code=404, detail="Query not found")
+    return query
+
+@router.delete("/{query_id}")
+def delete_query(
+    query_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Delete a specific query"""
+    query = db.query(Query).filter(Query.id == query_id, Query.user_id == current_user.id).first()
+    if not query:
+        raise HTTPException(status_code=404, detail="Query not found")
     
-    suggestions = ml_service.get_real_time_suggestions(q, limit=5)
-    return {"suggestions": suggestions}
+    db.delete(query)
+    db.commit()
+    
+    return {"message": "Query deleted successfully"}
 
 @router.post("/search-chunks")
 def search_legal_chunks(
@@ -271,12 +281,3 @@ def search_legal_chunks(
         "total_found": len(chunks),
         "high_relevance": len([c for c in chunks if c["score"] > 0.7])
     }
-def get_query(
-    query_id: int,
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    query = db.query(Query).filter(Query.id == query_id, Query.user_id == current_user.id).first()
-    if not query:
-        raise HTTPException(status_code=404, detail="Query not found")
-    return query

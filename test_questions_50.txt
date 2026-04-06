@@ -1,0 +1,77 @@
+Legal AI Test Questions - 50 Comprehensive Questions
+
+=== CRIMINAL LAW & POLICE RIGHTS ===
+1. What are my rights if I am arrested by police?
+2. Can police search my house without a warrant?
+3. What should I do if police torture me during custody?
+4. How long can police keep me in custody without charges?
+5. What is the procedure for filing an FIR?
+6. Can I refuse to give my fingerprints to police?
+7. What are my rights during police interrogation?
+8. How do I get bail after arrest?
+9. What is the difference between cognizable and non-cognizable offenses?
+10. Can police arrest me without showing an arrest warrant?
+
+=== CONSUMER PROTECTION ===
+11. How do I file a consumer complaint against a defective product?
+12. What is the time limit for filing a consumer complaint?
+13. Can I get compensation for mental harassment by a company?
+14. What should I do if an online seller cheats me?
+15. How do I complain against misleading advertisements?
+16. What are my rights if a service provider overcharges me?
+17. Can I return a product after the warranty expires?
+18. How do I file a complaint against a bank for poor service?
+19. What is the procedure for getting a refund for cancelled flight?
+20. How do I complain against a doctor for medical negligence?
+
+=== PROPERTY & TENANT RIGHTS ===
+21. What are the tenant rights in rental agreements?
+22. Can a landlord evict me without notice?
+23. How much advance notice is required for rent increase?
+24. What should I do if my landlord doesn't return my security deposit?
+25. Can I sublet my rented property to someone else?
+26. What is the process for property registration in India?
+27. How do I check if a property has clear title?
+28. What are the stamp duty rates for property purchase?
+29. Can I cancel a property agreement after signing?
+30. How do I resolve property disputes with neighbors?
+
+=== FAMILY LAW & DOMESTIC ISSUES ===
+31. How can I protect myself from domestic violence?
+32. What is the procedure for filing a dowry harassment case?
+33. How do I get a divorce in India?
+34. What are the grounds for divorce under Hindu Marriage Act?
+35. How is child custody decided in divorce cases?
+36. What are women's rights in property inheritance?
+37. Can I marry someone from a different religion?
+38. What is the legal age for marriage in India?
+39. How do I register a marriage in India?
+40. What are the maintenance rights for divorced women?
+
+=== EMPLOYMENT & LABOR RIGHTS ===
+41. What should I do if my employer doesn't pay my salary?
+42. Can my employer fire me without notice?
+43. What are my rights regarding overtime payment?
+44. How do I file a complaint for workplace harassment?
+45. What is the procedure for claiming provident fund?
+46. Can I work for a competitor after leaving my job?
+47. What are the maternity leave rights for women employees?
+48. How do I complain against unfair termination?
+49. What are the working hour limits under labor laws?
+50. How do I file a complaint with labor commissioner?
+
+=== TESTING INSTRUCTIONS ===
+- Try questions from different categories to test knowledge breadth
+- Test both simple and complex legal scenarios
+- Check if the AI provides relevant legal references
+- Verify that action steps are practical and helpful
+- Ensure sources are cited from Indian legal documents
+- Test both English and Hindi language support if available
+
+=== EXPECTED RESPONSE ELEMENTS ===
+Each answer should include:
+- Detailed explanation based on Indian legal documents
+- Relevant legal references (Act names, sections)
+- Practical action steps
+- Source citations from legal documents
+- Appropriate disclaimers about consulting lawyers

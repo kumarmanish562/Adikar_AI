@@ -11,6 +11,23 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDashboardData();
+    
+    // Set up real-time updates every 30 seconds
+    const interval = setInterval(fetchDashboardData, 30000);
+    
+    // Also refresh when user returns to the tab
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        fetchDashboardData();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   const fetchDashboardData = async () => {
@@ -18,24 +35,23 @@ const Dashboard = () => {
       const token = localStorage.getItem('token');
       
       // Fetch user profile
-      const profileRes = await axios.get('http://localhost:8000/api/profile', {
+      const profileRes = await axios.get('/api/profile', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setUserData(profileRes.data);
 
-      // Fetch recent queries
-      const queriesRes = await axios.get('http://localhost:8000/api/queries/my-queries', {
+      // Fetch stats and recent queries
+      const statsRes = await axios.get('/api/queries/stats', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      setRecentQueries(queriesRes.data.slice(0, 3)); // Get last 3 queries
-
-      // Calculate stats
-      const allQueries = queriesRes.data;
+      
       setStats({
-        totalQueries: allQueries.length,
-        documents: allQueries.filter(q => q.query_type === 'document').length,
-        voiceQueries: allQueries.filter(q => q.query_type === 'voice').length
+        totalQueries: statsRes.data.total_queries,
+        documents: statsRes.data.document_queries,
+        voiceQueries: statsRes.data.voice_queries
       });
+      
+      setRecentQueries(statsRes.data.recent_queries.slice(0, 3));
 
       setLoading(false);
     } catch (error) {
